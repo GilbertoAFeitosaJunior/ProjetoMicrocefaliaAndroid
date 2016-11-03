@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="br.com.mobi.redemicro.LoginActivity"
+    tools:showIn="@layout/activity_login"
+    android:background="@drawable/ic_splash">
+
+    <Button
+        android:id="@+id/pular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pular"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_gravity="right"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/mensagem_login"
+        android:id="@+id/textView4"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:background="@color/white_60pc"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:textStyle="bold" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

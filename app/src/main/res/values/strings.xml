@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">RedeMicro</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_noticias">NoticiasActivity</string>
+    <string name="mensagem_login">Bem vindo ao RedeMicro!\n\n\nAntes de começar a usar o aplicativo precisamos saber um pouco mais sobre você.\n\nNecessitamos de seus dados básicos para ter acesso à todas as funcionalidades do sistema.\n\n Disponibilizamos o freeds de Notícias para utilização sem cadastro".</string>
+    <string name="pular">Pular</string>
+    <string name="revoke_decision">Reveja sua decisão</string>
+    <string name="why_we_need_permission_all">Precisamos de todas as permissões para o correto funcionamento da aplicaçao</string>
+    <string name="i_dont_care">Não me importo</string>
+    <string name="ok">Ok</string>
+    <string name="why_we_need_permission_accounts">Sem a permissão de ler as contas de usuário de seu smartphone não será possível fazer login com o Google. Favor ative a permissão ou escolha outra forma de autenticação.</string>
+    <string name="title_activity_mostrar_perfil">MostrarPerfilActivity</string>
+    <string name="title_activity_perfil">PerfilActivity</string>
+    <string name="titulo_fazer_login">Lazer login</string>
+    <string name="titulo_Perfil">Completar perfil</string>
+    <string name="hint_senha">Senha</string>
+    <string name="dialog_config_location_negative">Não foi possível localizar</string>
+    <string name="dialog_config_location_title">Localização</string>
+    <string name="dialog_config_location_msg">Desejamos saber sua localização</string>
+    <string name="dialog_config_location_positive">Dispositivo localizado</string>
+
+    //EditText
+    <string name="hint_telefone">Telefone</string>
+    <string name="hint_endereco">Logradouro</string>
+    <string name="hint_numero">Número residencial</string>
+    <string name="hint_bairro">Bairro</string>
+    <string name="hint_cidade">Cidade</string>
+    <string name="hint_cep">CEP</string>
+    <string name="hint_estado">Estado</string>
+    <string name="hint_pais">País</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="perfil">MeuPerfil</string>
+    <string name="mais_tarde">Mais tarde</string>
+    <string name="enviar">ENVIAR</string>
+    <string name="title_login_erro">Aviso</string>
+    <string name="msg_erro_login">Falha ao tentar fazer o login com o google, verifique sua conexão e tente novamente.</string>
+    <string name="sim">Sim</string>
+    <string name="carregando">carregando...</string>
+    <string name="title_activity_completar_perfil">CompletarPerfilActivity</string>
+
+</resources>
