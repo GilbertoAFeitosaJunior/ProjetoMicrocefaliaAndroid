@@ -30,7 +30,7 @@ public class CompletarPerfilActivity extends AppCompatActivity {
 
 
 
-        if (TextUtils.isEmpty(usuario.getFoto())) {
+        if (!TextUtils.isEmpty(usuario.getFoto())) {
             Picasso.with(this).load(usuario.getFoto()).placeholder(android.R.drawable.ic_menu_camera).into(imageView);
         }
 

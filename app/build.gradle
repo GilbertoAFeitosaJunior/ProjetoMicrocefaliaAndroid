@@ -30,8 +30,7 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'hanks.xyz:smallbang-library:0.1.2'
     compile 'com.android.support:support-v4:23.4.0'
-    compile 'mobi.stos:podataka_lib:0.5b'
-
+    compile 'mobi.stos:podataka_lib:0.6b'
     compile 'com.google.firebase:firebase-core:9.6.0'
     compile 'com.google.firebase:firebase-messaging:9.6.0'
     compile 'com.google.android.gms:play-services-auth:9.6.0'

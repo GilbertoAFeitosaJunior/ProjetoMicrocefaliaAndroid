@@ -137,9 +137,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         private GoogleSignInAccount acc;
         private boolean opc;
 
-        boolean telefone;
-        boolean data;
-
         public CriarLoginTask(GoogleSignInAccount acc) {
             this.acc = acc;
             usuario = new Usuario();
@@ -195,8 +192,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 }
                             }
                             usuario.setEstado(json.getString("estado"));
+
                             usuarioBO.clean();
                             usuarioBO.insert(usuario);
+
                             SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).edit();
                             editor.putString(Constants.ID_LOGIN, "OK");
                             editor.commit();
