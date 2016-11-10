@@ -27,7 +27,7 @@
                 android:layout_gravity="right"
                 android:text="@string/mais_tarde" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/sing_in_foto"
                 android:layout_height="@dimen/sing_in_foto"
@@ -55,7 +55,34 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:text="E-mail"
-                android:textSize="@dimen/text_sub_title" />
+                android:textSize="@dimen/text_sub_title" /> -->
+
+            <Button
+                android:text="Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/data" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilDdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/margin_top_edit"
+                android:hint="@string/hint_ddd"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:textAppearance="@android:style/TextAppearance.Small">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/ddd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/tilTelefone"
@@ -74,12 +101,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:maxLength="11" />
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilEndereco"
+                android:id="@+id/tilLogradouro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -91,7 +118,7 @@
                 android:textAppearance="@android:style/TextAppearance.Small">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/endereco"
+                    android:id="@+id/logradouro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -175,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:maxLength="8" />
+                    android:maxLength="9" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

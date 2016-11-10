@@ -10,7 +10,7 @@ import mobi.stos.podataka_lib.annotations.PrimaryKey;
 @Entity
 public class Usuario implements Serializable {
 
-    @PrimaryKey
+    @PrimaryKey (autoIncrement = false)
     private int id;
     @Column
     private String nome;
@@ -32,6 +32,8 @@ public class Usuario implements Serializable {
     private String bairro;
     @Column
     private String cidade;
+    @Column
+    private String cep;
     @Column
     private String pais;
     @Column
@@ -141,6 +143,14 @@ public class Usuario implements Serializable {
 
     public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getEstado() {

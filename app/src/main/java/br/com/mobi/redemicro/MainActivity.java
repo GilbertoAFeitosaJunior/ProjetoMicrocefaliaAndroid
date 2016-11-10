@@ -12,11 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import br.com.mobi.redemicro.bean.Usuario;
+import br.com.mobi.redemicro.bo.UsuarioBo;
 import br.com.mobi.redemicro.fragment.ExibirPerfilFragment;
 import br.com.mobi.redemicro.fragment.MeuPerfilFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    UsuarioBo usuarioBO;
+    Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.app_name));
+
+        usuarioBO=new UsuarioBo(this);
+        usuario=usuarioBO.get(null,null);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -46,11 +54,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.noticias, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -72,7 +75,13 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_perfil:
-                fragment = new MeuPerfilFragment();
+                if(usuario==null){
+                    startActivity(new Intent(this, LoginActivity.class));
+                    MainActivity.this.finish();
+                }
+                else {
+                    fragment = new MeuPerfilFragment();
+                }
                 break;
             case R.id.nav_gallery:
                 startActivity(new Intent(this, CompletarPerfilActivity.class));

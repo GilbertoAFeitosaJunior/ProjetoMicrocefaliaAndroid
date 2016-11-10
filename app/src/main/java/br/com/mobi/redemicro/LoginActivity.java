@@ -183,16 +183,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             usuario.setNumero(json.getString("numero"));
                             usuario.setBairro(json.getString("bairro"));
                             usuario.setCidade(json.getString("cidade"));
+                            usuario.setCep(json.getString("cep"));
+                            usuario.setEstado(json.getString("estado"));
                             usuario.setPais(json.getString("pais"));
                             if (!json.getString("datanascimento").equals("null")) {
                                 try {
                                     usuario.setDatanascimento(new SimpleDateFormat("yyyy-MM-dd").parse(json.getString("datanascimento")));
                                //new Date(json)
+                                    //Log.i("chave", valor);
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            usuario.setEstado(json.getString("estado"));
 
                             usuarioBO.clean();
                             usuarioBO.insert(usuario);

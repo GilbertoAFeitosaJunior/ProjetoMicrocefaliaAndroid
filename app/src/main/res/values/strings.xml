@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RedeMicro</string>
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_noticias">NoticiasActivity</string>
     <string name="mensagem_login">Bem vindo ao RedeMicro!\n\n\nAntes de começar a usar o aplicativo precisamos saber um pouco mais sobre você.\n\nNecessitamos de seus dados básicos para ter acesso à todas as funcionalidades do sistema.\n\n Disponibilizamos o freeds de Notícias para utilização sem cadastro".</string>
     <string name="pular">Pular</string>
@@ -21,6 +21,8 @@
     <string name="dialog_config_location_positive">Dispositivo localizado</string>
 
     //EditText
+    <string name="hint_dataNascimento">Data de Nascimento</string>
+    <string name="hint_ddd">DDD</string>
     <string name="hint_telefone">Telefone</string>
     <string name="hint_endereco">Logradouro</string>
     <string name="hint_numero">Número residencial</string>
@@ -37,7 +39,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="perfil">MeuPerfil</string>
+    <string name="perfil">Meu perfil</string>
     <string name="mais_tarde">Mais tarde</string>
     <string name="enviar">ENVIAR</string>
     <string name="title_login_erro">Aviso</string>
@@ -45,5 +47,8 @@
     <string name="sim">Sim</string>
     <string name="carregando">carregando...</string>
     <string name="title_activity_completar_perfil">CompletarPerfilActivity</string>
+    <string name="toast_completar">Preencha suas informações corretamente</string>
+    <string name="msg_erro_enviar">Falha ao tentar enviar informações, verifique sua conexão e tente novamente.</string>
+    <string name="editar">Editar</string>
 
 </resources>

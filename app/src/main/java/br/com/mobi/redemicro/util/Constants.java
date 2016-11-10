@@ -15,6 +15,8 @@ public class Constants {
     public final static String ADDRESS = "Logradouro";
     public final static String POSTAL_CODE = "CodigoPostal";
     public final static String FULL_ADDRESS = "FullAddress";
+    public final static String NUMBER = "numero";
+    public final static String PAIS="pais";
     public final static String ID_LOGIN = "ID_LOGIN";
 
 

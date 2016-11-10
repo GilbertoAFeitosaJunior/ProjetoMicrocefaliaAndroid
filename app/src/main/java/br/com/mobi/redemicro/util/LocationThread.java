@@ -186,6 +186,8 @@ public class LocationThread implements
                 if (map != null && !TextUtils.isEmpty(map.get(GeoLocation.TypeAddress.COMPLETE))) {
                     SharedPreferences.Editor editor = context.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE).edit();
                     editor.putString(Constants.ADDRESS, map.get(GeoLocation.TypeAddress.ADDRESS));
+                    editor.putString(Constants.NUMBER, map.get(GeoLocation.TypeAddress.NUMBER));
+                    editor.putString(Constants.PAIS, map.get(GeoLocation.TypeAddress.COUNTRY));
                     editor.putString(Constants.NEIGHBORHOOD, map.get(GeoLocation.TypeAddress.NEIGHBOR));
                     editor.putString(Constants.CITY, map.get(GeoLocation.TypeAddress.CITY));
                     editor.putString(Constants.POSTAL_CODE, map.get(GeoLocation.TypeAddress.CEP));
