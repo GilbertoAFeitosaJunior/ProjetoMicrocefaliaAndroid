@@ -75,7 +75,7 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
         dataConvertida=ano+"-"+(mes+1)+"-"+dia;
 
         if(usuario.getDatanascimento()!=null){
-            data.setText(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()));
+            data.setText(new SimpleDateFormat("dd/MM/yyyy").format(usuario.getDatanascimento()));
         }
 
         ddd = (EditText) findViewById(R.id.ddd);
@@ -146,14 +146,17 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
                 salvar();
                 break;
             case R.id.data:
+                if(usuario.getDatanascimento()!=null) {
+                    ano = Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(0, 4));
+                    mes=Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(5, 7))-1;
+                    dia=Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(8, 10));
+                }
+                System.out.println("#################################"+ano);
+                System.out.println("#################################"+new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(5, 7));
+                System.out.println("#################################"+new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(8, 10));
                 dataPicker = new DatePickerDialog(CompletarPerfilActivity.this, compraDateSetListener, ano, mes, dia);// data
                 data.setText(dia + " / " + (mes + 1) + " / " + ano);
                 dataPicker.show();
-                try {
-                    usuario.setDatanascimento(new SimpleDateFormat("yyyy-MM-dd").parse(dataConvertida));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
                 break;
 
         }
@@ -169,6 +172,11 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
 
     public void salvar() {
         int i = 0;
+        try {
+            usuario.setDatanascimento(new SimpleDateFormat("yyyy-MM-dd").parse(dataConvertida));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (ddd.getText().toString().length() == 2) {
             usuario.setDdd(ddd.getText().toString());
         } else if (ddd.getText().toString().length() > 0 && ddd.getText().toString().length() < 2 || ddd.getText().toString().equals("00")) {

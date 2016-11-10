@@ -50,5 +50,6 @@
     <string name="toast_completar">Preencha suas informações corretamente</string>
     <string name="msg_erro_enviar">Falha ao tentar enviar informações, verifique sua conexão e tente novamente.</string>
     <string name="editar">Editar</string>
+    <string name="hint_data">Data</string>
 
 </resources>
