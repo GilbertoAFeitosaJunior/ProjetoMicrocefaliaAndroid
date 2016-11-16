@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import br.com.mobi.redemicro.bean.Usuario;
 import br.com.mobi.redemicro.bo.UsuarioBo;
@@ -64,6 +65,7 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
 
         usuarioBO = new UsuarioBo(this);
         usuario = usuarioBO.get(null, null);
+
         SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
         data=(Button)findViewById(R.id.data);
@@ -73,59 +75,60 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
         dia = calendario.get(Calendar.DAY_OF_MONTH);
 
         dataConvertida=ano+"-"+(mes+1)+"-"+dia;
-
-        if(usuario.getDatanascimento()!=null){
+        if(usuario.getDatanascimento().getTime()!=0){
             data.setText(new SimpleDateFormat("dd/MM/yyyy").format(usuario.getDatanascimento()));
+        }else if(usuario.getDatanascimento().getTime()==0){
+            usuario.setDatanascimento(null);
         }
 
         ddd = (EditText) findViewById(R.id.ddd);
-        if (!usuario.getDdd().equals("")) {
+        if (usuario.getDdd()!=null) {
             ddd.setText(usuario.getDdd());
         }
         telefone = (EditText) findViewById(R.id.telefone);
-        if (!usuario.getTelefone().equals("")) {
+        if (usuario.getTelefone()!=null) {
             telefone.setText(usuario.getTelefone());
         }
         telefone.addTextChangedListener(Mask.insert("#####-####", telefone));
         logradouro = (EditText) findViewById(R.id.logradouro);
-        if (!usuario.getLogradouro().equals("")) {
+        if (usuario.getLogradouro()!=null) {
             logradouro.setText(usuario.getLogradouro());
         } else {
             logradouro.setText(preferences.getString(Constants.ADDRESS, ""));
         }
         numero = (EditText) findViewById(R.id.numero);
-        if (!usuario.getNumero().equals("")) {
+        if (usuario.getNumero()!=null) {
             numero.setText(usuario.getNumero());
         } else {
             numero.setText(preferences.getString(Constants.NUMBER, ""));
         }
         bairro = (EditText) findViewById(R.id.bairro);
-        if (!usuario.getBairro().equals("")) {
+        if (usuario.getBairro()!=null) {
             bairro.setText(usuario.getBairro());
         } else {
             bairro.setText(preferences.getString(Constants.NEIGHBORHOOD, ""));
         }
         cidade = (EditText) findViewById(R.id.cidade);
-        if (!usuario.getCidade().equals("")) {
+        if (usuario.getCidade()!=null) {
             cidade.setText(usuario.getCidade());
         } else {
             cidade.setText(preferences.getString(Constants.CITY, ""));
         }
         cep = (EditText) findViewById(R.id.cep);
-        if (!usuario.getCep().equals("")) {
+        if (usuario.getCep()!=null) {
             cep.setText(usuario.getCep());
         } else {
             cep.setText(preferences.getString(Constants.POSTAL_CODE, ""));
         }
         cep.addTextChangedListener(Mask.insert("#####-###", cep));
         estado = (EditText) findViewById(R.id.estado);
-        if (!usuario.getEstado().equals("")) {
+        if (usuario.getEstado()!=null) {
             estado.setText(usuario.getEstado());
         } else {
             estado.setText(preferences.getString(Constants.STATE, ""));
         }
         pais = (EditText) findViewById(R.id.pais);
-        if (!usuario.getPais().equals("")) {
+        if (usuario.getPais()!=null) {
             pais.setText(usuario.getPais());
         } else {
             pais.setText(preferences.getString(Constants.PAIS, ""));
@@ -151,12 +154,16 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
                     mes=Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(5, 7))-1;
                     dia=Integer.parseInt(new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(8, 10));
                 }
-                System.out.println("#################################"+ano);
-                System.out.println("#################################"+new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(5, 7));
-                System.out.println("#################################"+new SimpleDateFormat("yyyy-MM-dd").format(usuario.getDatanascimento()).substring(8, 10));
                 dataPicker = new DatePickerDialog(CompletarPerfilActivity.this, compraDateSetListener, ano, mes, dia);// data
-                data.setText(dia + " / " + (mes + 1) + " / " + ano);
                 dataPicker.show();
+                try {
+                    Date datemax=new SimpleDateFormat("yyyy-MM-dd").parse((ano-13)+"-"+(mes+1)+"-"+dia),
+                    datemin=new SimpleDateFormat("yyyy-MM-dd").parse((ano-95)+"-"+(mes+1)+"-"+dia);
+                    dataPicker.getDatePicker().setMaxDate(datemax.getTime());
+                    dataPicker.getDatePicker().setMinDate(datemin.getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
 
         }
@@ -164,8 +171,7 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
     DatePickerDialog.OnDateSetListener compraDateSetListener = new DatePickerDialog.OnDateSetListener() {// data
         @Override
         public void onDateSet(DatePicker view, int ano, int mes, int dia) {
-
-            data.setText(dia + " / " + (mes + 1) + " / " + ano);
+            data.setText(dia + "/" + (mes + 1) + "/" + ano);
             dataConvertida = ano + "-" + (mes + 1) + "-" + dia;
         }
     };

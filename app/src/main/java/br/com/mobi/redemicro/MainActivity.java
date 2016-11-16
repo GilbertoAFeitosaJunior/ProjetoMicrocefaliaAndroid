@@ -1,6 +1,8 @@
 package br.com.mobi.redemicro;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -9,19 +11,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import br.com.mobi.redemicro.bean.Usuario;
 import br.com.mobi.redemicro.bo.UsuarioBo;
-import br.com.mobi.redemicro.fragment.ExibirPerfilFragment;
 import br.com.mobi.redemicro.fragment.MeuPerfilFragment;
+import br.com.mobi.redemicro.util.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    UsuarioBo usuarioBO;
-    Usuario usuario;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.app_name));
 
-        usuarioBO=new UsuarioBo(this);
-        usuario=usuarioBO.get(null,null);
+        sharedPreferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,12 +74,12 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_perfil:
-                if(usuario==null){
-                    startActivity(new Intent(this, LoginActivity.class));
-                    MainActivity.this.finish();
+                if(sharedPreferences.getString(Constants.ID_LOGIN, "").equals("OK")){
+                    fragment = new MeuPerfilFragment();
                 }
                 else {
-                    fragment = new MeuPerfilFragment();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    MainActivity.this.finish();
                 }
                 break;
             case R.id.nav_gallery:

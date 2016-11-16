@@ -103,7 +103,7 @@ public class MeuPerfilFragment extends Fragment {
             if (usuario.getEmail() != null) {
                 email_perfil.setText(usuario.getEmail());
             }
-            if (usuario.getDatanascimento() != null) {
+            if (usuario.getDatanascimento().getTime()!=0) {
                 data_perfil.setText(new SimpleDateFormat("dd/MM/yyyy").format(usuario.getDatanascimento()));
             }
             if (usuario.getDdd() != null) {
