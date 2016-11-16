@@ -228,8 +228,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (aVoid) {
                 if (TextUtils.isEmpty(usuario.getTelefone()) || (usuario.getDatanascimento() == null)) {
                     startActivity(new Intent(LoginActivity.this, CompletarPerfilActivity.class));
+                    finish();
                 } else {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
 
             } else {

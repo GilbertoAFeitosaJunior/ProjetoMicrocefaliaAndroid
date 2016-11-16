@@ -12,6 +12,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import br.com.mobi.redemicro.bean.Usuario;
 import br.com.mobi.redemicro.bo.UsuarioBo;
@@ -22,6 +27,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferences sharedPreferences;
+    private UsuarioBo usuarioBo;
+    private View headerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +46,13 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        exibirViewPerfil();
+
+
     }
 
     @Override
@@ -74,10 +86,9 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_perfil:
-                if(sharedPreferences.getString(Constants.ID_LOGIN, "").equals("OK")){
+                if (sharedPreferences.getString(Constants.ID_LOGIN, "").equals("OK")) {
                     fragment = new MeuPerfilFragment();
-                }
-                else {
+                } else {
                     startActivity(new Intent(this, LoginActivity.class));
                     MainActivity.this.finish();
                 }
@@ -95,5 +106,21 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void exibirViewPerfil() {
+        usuarioBo = new UsuarioBo(this);
+        Usuario usuario = usuarioBo.get(null, null);
+        ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPerfil);
+        TextView nomePerfil = (TextView) headerLayout.findViewById(R.id.textViewPerfil);
+
+        if(usuario!=null){
+            Picasso.with(this).load(usuario.getFoto()).placeholder(android.R.drawable.ic_menu_camera).into(imageView);
+            nomePerfil.setText(usuario.getNome());
+        }else{
+            Picasso.with(this).load(R.mipmap.ic_launcher).placeholder(android.R.drawable.ic_menu_camera).into(imageView);
+            nomePerfil.setText(getString(R.string.app_name));
+        }
+
     }
 }

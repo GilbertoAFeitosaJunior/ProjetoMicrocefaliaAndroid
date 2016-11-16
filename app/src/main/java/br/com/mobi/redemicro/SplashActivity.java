@@ -33,7 +33,7 @@ public class SplashActivity extends Activity {
         protected Void doInBackground(Void... params) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -47,10 +47,10 @@ public class SplashActivity extends Activity {
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
             if (sharedPreferences.getString(Constants.ID_LOGIN, "").equals("OK")) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                SplashActivity.this.finish();
+                finish();
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                SplashActivity.this.finish();
+                finish();
             }
         }
     }

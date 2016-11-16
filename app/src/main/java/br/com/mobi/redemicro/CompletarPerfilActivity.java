@@ -59,9 +59,9 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_completar_perfil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         getSupportActionBar().setTitle(getString(R.string.app_name));
         getSupportActionBar().setSubtitle(R.string.editar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         usuarioBO = new UsuarioBo(this);
         usuario = usuarioBO.get(null, null);
