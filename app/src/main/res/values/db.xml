@@ -4,6 +4,7 @@
     <integer name="db_version">1</integer>
     <string-array name="db_scan">
         <item>br.com.mobi.redemicro.bean.Usuario</item>
+        <item>br.com.mobi.redemicro.bean.Noticia</item>
     </string-array>
     <string name="db_log">true</string>
 </resources>

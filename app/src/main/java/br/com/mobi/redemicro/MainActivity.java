@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import br.com.mobi.redemicro.bean.Usuario;
 import br.com.mobi.redemicro.bo.UsuarioBo;
 import br.com.mobi.redemicro.fragment.MeuPerfilFragment;
+import br.com.mobi.redemicro.fragment.NoticiaFragment;
 import br.com.mobi.redemicro.util.Constants;
 
 public class MainActivity extends AppCompatActivity
@@ -93,8 +94,8 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this.finish();
                 }
                 break;
-            case R.id.nav_gallery:
-                startActivity(new Intent(this, CompletarPerfilActivity.class));
+            case R.id.nav_noticias:
+                fragment=new NoticiaFragment();
                 break;
         }
 

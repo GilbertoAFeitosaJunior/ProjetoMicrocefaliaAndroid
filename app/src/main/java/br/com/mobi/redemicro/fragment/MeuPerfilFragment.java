@@ -66,7 +66,6 @@ public class MeuPerfilFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.ic_editar_perfil) {
             startActivity(new Intent(getContext(), CompletarPerfilActivity.class));
-
         }
         return super.onOptionsItemSelected(item);
     }

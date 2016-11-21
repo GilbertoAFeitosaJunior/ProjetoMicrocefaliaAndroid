@@ -45,7 +45,7 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
 
     private Calendar calendario = Calendar.getInstance();
     private DatePickerDialog dataPicker;
-    private int ano, mes, dia;
+    private int ano, mes, dia, anoatual,mesatual,diaatual;
     String dataConvertida;
     private UsuarioBo usuarioBO;
     private Usuario usuario;
@@ -70,9 +70,13 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
 
         data=(Button)findViewById(R.id.data);
 
-        ano = calendario.get(Calendar.YEAR);
-        mes = calendario.get(Calendar.MONTH);
-        dia = calendario.get(Calendar.DAY_OF_MONTH);
+        anoatual = calendario.get(Calendar.YEAR);
+        mesatual = calendario.get(Calendar.MONTH);
+        diaatual = calendario.get(Calendar.DAY_OF_MONTH);
+
+        ano=anoatual;
+        mes=mesatual;
+        dia=diaatual;
 
         dataConvertida=ano+"-"+(mes+1)+"-"+dia;
         if(usuario.getDatanascimento().getTime()!=0){
@@ -157,8 +161,8 @@ public class CompletarPerfilActivity extends AppCompatActivity implements View.O
                 dataPicker = new DatePickerDialog(CompletarPerfilActivity.this, compraDateSetListener, ano, mes, dia);// data
                 dataPicker.show();
                 try {
-                    Date datemax=new SimpleDateFormat("yyyy-MM-dd").parse((ano-13)+"-"+(mes+1)+"-"+dia),
-                    datemin=new SimpleDateFormat("yyyy-MM-dd").parse((ano-95)+"-"+(mes+1)+"-"+dia);
+                    Date datemax=new SimpleDateFormat("yyyy-MM-dd").parse((anoatual-13)+"-"+(mesatual+1)+"-"+diaatual),
+                    datemin=new SimpleDateFormat("yyyy-MM-dd").parse((anoatual-95)+"-"+(mesatual+1)+"-"+diaatual);
                     dataPicker.getDatePicker().setMaxDate(datemax.getTime());
                     dataPicker.getDatePicker().setMinDate(datemin.getTime());
                 } catch (ParseException e) {

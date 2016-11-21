@@ -2,6 +2,7 @@ package br.com.mobi.redemicro.util;
 
 public class Constants {
 
+    public static final String APP = "REDEMICRO";
     public static final String PREFERENCES = "REDEMICRO";
 
 
@@ -21,6 +22,6 @@ public class Constants {
 
 
     public final static String APPENDERECO = "APPENDERECO";
-
-
+    public static final String HASH_LOGIN = "HashLogin";
+    public static final String AUTH_ID = "authId";
 }
