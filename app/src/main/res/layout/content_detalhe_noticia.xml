@@ -27,58 +27,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp">
-
-                    <Button
-                        android:id="@+id/like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/ic_like_off"
-                        android:onClick="comentar"
-                        android:text="@string/curtir" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp">
-
-
-                    <Button
-                        android:id="@+id/curtidas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:onClick="listarCurtidas"
-                        android:text="0" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:gravity="right"
-                android:id="@+id/dataPublicacaoDetalhes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/grey_800"
-                android:text="@string/data_hora_format"
-                android:layout_marginRight="10dp"
-                android:textSize="12dp" />
 
 
             <TextView
@@ -94,12 +43,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" />
+            <TextView
+                android:gravity="right"
+                android:id="@+id/dataPublicacaoDetalhes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/grey_800"
+                android:text="@string/data_hora_format"
+                android:layout_marginRight="10dp"
+                android:textSize="12dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:gravity="right">
+                android:gravity="right"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="left">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left">
+
+                        <Button
+                            android:layout_gravity="left"
+                            android:id="@+id/like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/ic_like_off"
+                            android:onClick="comentar"
+                            android:text="@string/curtir"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left">
+
+
+                        <Button
+                            android:layout_marginRight="20dp"
+                            android:layout_gravity="left"
+                            android:id="@+id/curtidas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:onClick="listarCurtidas"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/cometarButton"
@@ -136,6 +143,7 @@
                 android:onClick="listarTodosComentarios"
                 android:paddingRight="10dp"
                 android:text="@string/mais_comentarios" />
+
 
         </LinearLayout>
 
