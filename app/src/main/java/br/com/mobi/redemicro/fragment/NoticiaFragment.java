@@ -51,7 +51,6 @@ public class NoticiaFragment extends Fragment {
     private boolean loading;
     private String query;
     private Context context;
-    private Usuario usuario;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,8 +79,6 @@ public class NoticiaFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        UsuarioBo usuarioBO = new UsuarioBo(context);
-        usuario = usuarioBO.get(null, null);
         getActivity().invalidateOptionsMenu();
 
         noticiaTask = new NoticiaTask();
@@ -190,7 +187,6 @@ public class NoticiaFragment extends Fragment {
 
                                         noticia.setIdNoticia(json.getInt("idNoticia"));
                                         noticia.setTitulo(json.getString("titulo"));
-                                        System.out.println("**********************"+noticia.getTitulo());
                                         noticia.setChamada(json.getString("chamada"));
                                         noticia.setQtdViews(json.getInt("qtdViews"));
                                         noticia.setQtdCurtida(json.getInt("qtdCurtida"));

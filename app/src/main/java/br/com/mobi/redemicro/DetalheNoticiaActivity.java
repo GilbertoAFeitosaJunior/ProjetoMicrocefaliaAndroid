@@ -1,11 +1,15 @@
 package br.com.mobi.redemicro;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -64,7 +68,6 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         noticiaBO = new NoticiaBo(this);
         //comentarBO = new ComentarBO(this);
 
-        //galeriaNoticiaBO = new GaleriaNoticiaBO(this);
         imagemDetalhesNoticia = (ImageView) findViewById(R.id.imagemDetalhesNoticia);
         conteudoDetalhes = (TextView) findViewById(R.id.conteudoDetalhes);
         tituloDetalhes = (TextView) findViewById(R.id.tituloDetalhes);
@@ -90,16 +93,39 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (!opc) {
+
                     if (usuario != null) {
-                        curtir();
+                        if (!opc) {
+                            //curtir();
+                            CurtirTask curtirTask = new CurtirTask();
+                            curtirTask.execute(null, null, null);
+                        }else {
+                            //discurtir();
+                            DiscurtirTask discutirTask = new DiscurtirTask();
+                            discutirTask.execute(null, null, null);
+                        }
 
                     } else {
-                        FazerLogin();
+                        AlertDialog alertDialog = new AlertDialog.Builder(DetalheNoticiaActivity.this).create();
+                        alertDialog.setMessage(getString(R.string.deseja_fazer_login));
+
+                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(DetalheNoticiaActivity.this,LoginActivity.class));
+                                finish();
+                            }
+                        });
+                        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        alertDialog.show();
                     }
-                } else {
-                    discurtir();
-                }*/
+
             }
         });
 
@@ -145,8 +171,8 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                                 noticia.setNoticia(json.getString("noticia"));
 
 
-                                noticiaBO.clean();
-                                noticiaBO.insert(noticia);
+                                //noticiaBO.clean();
+                                //noticiaBO.insert(noticia);
                                 opc=true;
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -205,6 +231,91 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    public class CurtirTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = getString(R.string.url_rest) + "noticia/curtir";
+            try {
+
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
+                httpAsyncTask.addParams("idUsuario", usuario.getId());
+                httpAsyncTask.addParams("idNoticia", noticia.getIdNoticia());
+
+                httpAsyncTask.post(new HttpAsyncTask.FutureCallback() {
+                    @Override
+                    public void onCallback(Object jsonObject, int responseCode) {
+                        switch (responseCode) {
+                            case 200:
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Drawable draw = ContextCompat.getDrawable(DetalheNoticiaActivity.this, R.drawable.ic_like_ok);
+
+                                        like.setCompoundDrawablesWithIntrinsicBounds(draw, null, null, null);//left;
+
+                                        opc = true;
+
+                                        final DetalhesTask task = new DetalhesTask();
+                                        task.execute(null, null, null);
+                                    }
+                                });
+                                break;
+                            case 403:
+                                curtirDiscurtir = "curtir";
+                                break;
+                        }
+                    }
+                });
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public class DiscurtirTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = getString(R.string.url_rest) + "noticia/discurtir";
+            try {
+
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
+                httpAsyncTask.addParams("idUsuario", usuario.getId());
+                httpAsyncTask.addParams("idNoticia", noticia.getIdNoticia());
+
+                httpAsyncTask.post(new HttpAsyncTask.FutureCallback() {
+                    @Override
+                    public void onCallback(Object jsonObject, int responseCode) {
+                        switch (responseCode) {
+                            case 200:
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Drawable draw = ContextCompat.getDrawable(DetalheNoticiaActivity.this, R.drawable.ic_like_off);
+                                        like.setCompoundDrawablesWithIntrinsicBounds(draw, null, null, null);//left;
+                                        opc = false;
+
+                                        final DetalhesTask task = new DetalhesTask();
+                                        task.execute(null, null, null);
+                                    }
+                                });
+                                break;
+                        }
+                    }
+                });
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }
