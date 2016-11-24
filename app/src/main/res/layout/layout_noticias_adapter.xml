@@ -34,6 +34,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:gravity="right"
+                android:background="@color/black_transparent"
                 android:textColor="@android:color/white"
                 android:textStyle="bold">
 
@@ -120,7 +121,8 @@
                 android:layout_below="@+id/fotoNoticias"
                 android:layout_margin="10dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="O que é microcefalia" />
+                android:text="O que é microcefalia"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/chamadaNoticias"
@@ -129,7 +131,8 @@
                 android:layout_below="@+id/tituloNoticias"
                 android:layout_margin="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Conteúdo da notícia, super e hiper mega grande" />
+                android:text="Conteúdo da notícia, super e hiper mega grande"
+                android:textColor="@android:color/black"/>
 
 
         </RelativeLayout>

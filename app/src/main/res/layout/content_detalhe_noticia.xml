@@ -33,14 +33,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"/>
 
 
             <TextView
                 android:id="@+id/conteudoDetalhes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:textColor="@android:color/black"/>
             <TextView
                 android:gravity="right"
                 android:id="@+id/dataPublicacaoDetalhes"
