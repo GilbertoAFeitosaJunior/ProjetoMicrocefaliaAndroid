@@ -14,9 +14,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -64,6 +67,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     private List<Curtir> listaDeCurtir;
     private String comentarioUsuario = "";
     private List<Comentar> listar;
+    List<Comentar>listaresun;
     private ComentarAdapater adpater;
 
     private ProgressDialog progressDialog;
@@ -395,9 +399,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            System.out.println("###################################" + "#####" + opc);
             if (usuario != null) {
-                System.out.println("###################################" + "#####" + opc);
                 if (opc) {
                     draw = ContextCompat.getDrawable(DetalheNoticiaActivity.this, R.drawable.ic_like_ok);
 
@@ -476,6 +478,12 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
 
     public class ComentarTask extends AsyncTask<Void, Void, Void> {
 
+        public ComentarTask(){}
+        public ComentarTask(String comentario){
+            comentarioUsuario=comentario;
+        }
+
+
         @Override
         protected Void doInBackground(Void... params) {
             String url = getString(R.string.url_rest) + "noticia/comentar";
@@ -529,6 +537,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                                     Comentar comentar = new Comentar();
 
                                     comentar.setId(json.getInt("id"));
+                                    comentar.setIdUsuario(json.getInt("idUsuario"));
                                     comentar.setNome(json.getString("nome"));
                                     comentar.setFoto(json.getString("foto"));
                                     comentar.setComentario(json.getString("comentario"));
@@ -570,7 +579,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     }
 
     private List<Comentar> listaComente(List<Comentar> listar) {
-        List<Comentar>lista=new ArrayList<>();
+        listaresun=new ArrayList<>();
         int i=listar.size();
         if(listar.size()>5){
             i=5;
@@ -580,9 +589,9 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             maisComentarios.setVisibility(View.GONE);
         }
         for(int tamanho=0;tamanho<i;tamanho++){
-            lista.add(listar.get(tamanho));
+            listaresun.add(listar.get(tamanho));
         }
-        return lista;
+        return listaresun;
     }
 
     private void calculeHeightListView(ComentarAdapater adapter) {
@@ -605,6 +614,123 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         Intent intent=new Intent(this, ListarTodosComentarios.class);
         intent.putExtra("idNoticia",noticia.getIdNoticia());
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Comentar comentar = (Comentar) this.comertarListView.getItemAtPosition(info.position);
+
+        if (usuario.getId()==(comentar.getIdUsuario())) {
+            getMenuInflater().inflate(R.menu.menu_contexto_excluir_editar, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        final Comentar comentar = (Comentar) this.comertarListView.getItemAtPosition(info.position);
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_editar:
+
+                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewComentar = layoutInflater.inflate(R.layout.comentar_alert_dialog, null);
+                final EditText cometarEditText = (EditText) viewComentar.findViewById(R.id.cometarEditText);
+
+                AlertDialog alert = new AlertDialog.Builder(this).create();
+                alert.setView(viewComentar);
+                cometarEditText.setText(comentar.getComentario());
+
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        comentar.setComentario(cometarEditText.getText().toString());
+                        ComentarTask comentarTask = new ComentarTask(cometarEditText.getText().toString());
+                        comentarTask.execute(null, null, null);
+                        DeletarTask deletarTask = new DeletarTask(info.position);
+                        deletarTask.execute(null, null, null);
+
+
+                    }
+                });
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "Cencelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert.show();
+                return true;
+            case R.id.menu_item_excluir:
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setMessage(getString(R.string.deseja_exclir));
+
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeletarTask deletarTask = new DeletarTask(info.position);
+                        deletarTask.execute(null, null, null);
+                    }
+                });
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alertDialog.show();
+
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public class DeletarTask extends AsyncTask<Void, Void, Void> {
+        private Comentar comentar;
+        int position;
+
+        public DeletarTask( int position) {
+            this.comentar = listar.get(position);
+            this.position=position;
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = getString(R.string.url_rest) + "noticia/descomentar/"+comentar.getId();
+            try {
+
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
+
+                try {
+                    httpAsyncTask.get(new HttpAsyncTask.FutureCallback() {
+                        @Override
+                        public void onCallback(Object jsonObject, int responseCode) {
+                            switch (responseCode) {
+                                case 200:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            listaresun.remove(position);
+                                            adpater.notifyDataSetChanged();
+                                            calculeHeightListView(adpater);
+                                        }
+                                    });
+                                    break;
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 }

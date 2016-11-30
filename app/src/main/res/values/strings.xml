@@ -156,4 +156,5 @@
     <string name="curtido">CURTIDO</string>
     <string name="title_activity_listar_todos_comentarios">ListarTodosComentarios</string>
     <string name="escreva_um_comentario">Escreva um comentário...</string>
+    <string name="deseja_exclir">Deseja realmente excluir o cometário?</string>
 </resources>

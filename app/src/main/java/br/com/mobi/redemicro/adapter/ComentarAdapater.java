@@ -63,7 +63,7 @@ public class ComentarAdapater extends BaseAdapter {
         TextView comentario = (TextView) view.findViewById(R.id.comentario);
         comentario.setText(comentar.getComentario());
         TextView data=(TextView) view.findViewById(R.id.data);
-        data.setText(new SimpleDateFormat("dd/MM/yyyy").format(comentar.getDate()));
+        data.setText(new SimpleDateFormat("HH:mm").format(comentar.getDate())+"hs "+new SimpleDateFormat(" dd/MM/yyyy").format(comentar.getDate()));
         return view;
     }
 }

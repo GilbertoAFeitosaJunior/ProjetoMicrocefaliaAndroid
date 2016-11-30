@@ -7,7 +7,7 @@ import java.util.Date;
  */
 
 public class Comentar {
-    int id;
+    int id, idUsuario;
     String nome;
     String foto;
     String comentario;
@@ -17,8 +17,16 @@ public class Comentar {
         return id;
     }
 
-    public void setId(int i) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {

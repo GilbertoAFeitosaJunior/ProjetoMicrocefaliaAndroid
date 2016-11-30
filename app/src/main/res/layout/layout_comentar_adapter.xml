@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:paddingTop="10dp"
-            android:text="Gilberto Feitosa Junior"
+            android:text="Usuário"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Gilberto Feitosa Junior Gilberto Feitosa JuniorGilberto Feitosa JuniorGilberto Feitosa Junior Gilberto Feitosa JuniorGilberto Feitosa Junior Gilberto Feitosa Junior Gilberto Feitosa Junior Gilberto Feitosa Junior Gilberto Feitosa Junior "
+            android:text="Comentário"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black"
             android:textStyle="normal" />
@@ -52,10 +52,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey_800"
+                android:textSize="12dp"
                 android:id="@+id/data"
-                android:text="DD/MM/YYYY"
-                android:gravity="right"/>
+                android:text="HH:MMhs DD/MM/YYYY"
+                android:gravity="right"
+                android:textStyle="italic"/>
         </LinearLayout>
 
 

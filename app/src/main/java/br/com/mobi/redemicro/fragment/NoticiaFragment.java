@@ -162,7 +162,6 @@ public class NoticiaFragment extends Fragment {
     private class NoticiaTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            System.out.println("**********************"+page);
             try {
                 String url = getString(R.string.url_rest) + "noticia/chamada";
                 HttpAsyncTask task = new HttpAsyncTask(url, context);

@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,10 +57,10 @@ public class ListarTodosComentarios extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        idNoticia=(int) getIntent().getSerializableExtra("idNoticia");
+        idNoticia = (int) getIntent().getSerializableExtra("idNoticia");
 
-        ListarDeComentariosTask listarDeComentariosTask=new ListarDeComentariosTask();
-        listarDeComentariosTask.execute(null,null,null);
+        ListarDeComentariosTask listarDeComentariosTask = new ListarDeComentariosTask();
+        listarDeComentariosTask.execute(null, null, null);
 
         comentarioUsuario = (EditText) findViewById(R.id.comentarioUsuario);
         comertarListView = (ListView) findViewById(R.id.listViewTodosComentarios);
@@ -109,17 +110,14 @@ public class ListarTodosComentarios extends AppCompatActivity {
     }
 
     public void listarTodosComentarios() {
-        for(Comentar item: listar){
-            System.out.println("@$@$$@$@$@"+item.getComentario());
-        }
         adpater = new ComentarAdapater(listar, this);
         comertarListView.setAdapter(adpater);
     }
 
     private List<Comentar> listaComente(List<Comentar> listar) {
-        List<Comentar>lista=new ArrayList<>();
-        int i=0;
-        for(int tamanho=listar.size()-1;tamanho>= i;tamanho--){
+        List<Comentar> lista = new ArrayList<>();
+        int i = 0;
+        for (int tamanho = listar.size() - 1; tamanho >= i; tamanho--) {
             lista.add(listar.get(tamanho));
         }
         return lista;
@@ -152,6 +150,7 @@ public class ListarTodosComentarios extends AppCompatActivity {
                                     Comentar comentar = new Comentar();
 
                                     comentar.setId(json.getInt("id"));
+                                    comentar.setIdUsuario(json.getInt("idUsuario"));
                                     comentar.setNome(json.getString("nome"));
                                     comentar.setFoto(json.getString("foto"));
                                     comentar.setComentario(json.getString("comentario"));
@@ -179,15 +178,16 @@ public class ListarTodosComentarios extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            listar= listaComente(listar);
+            listar = listaComente(listar);
             listarTodosComentarios();
         }
     }
 
     public class ComentarTask extends AsyncTask<Void, Void, Void> {
         String texto;
+
         public ComentarTask(String texto) {
-            this.texto=texto;
+            this.texto = texto;
         }
 
         @Override
@@ -205,7 +205,7 @@ public class ListarTodosComentarios extends AppCompatActivity {
                     public void onCallback(Object jsonObject, int responseCode) {
                         switch (responseCode) {
                             case 200:
-                                ListarDeComentariosTask listarDeComentariosTask=new ListarDeComentariosTask();
+                                ListarDeComentariosTask listarDeComentariosTask = new ListarDeComentariosTask();
                                 listarDeComentariosTask.execute();
                                 break;
                             case 400:
@@ -214,6 +214,126 @@ public class ListarTodosComentarios extends AppCompatActivity {
                     }
                 });
             } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Comentar comentar = (Comentar) this.comertarListView.getItemAtPosition(info.position);
+
+        if (usuario.getId() == (comentar.getIdUsuario())) {
+            getMenuInflater().inflate(R.menu.menu_contexto_excluir_editar, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        final Comentar comentar = (Comentar) this.comertarListView.getItemAtPosition(info.position);
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_editar:
+
+                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewComentar = layoutInflater.inflate(R.layout.comentar_alert_dialog, null);
+                final EditText cometarEditText = (EditText) viewComentar.findViewById(R.id.cometarEditText);
+
+                AlertDialog alert = new AlertDialog.Builder(this).create();
+                alert.setView(viewComentar);
+                cometarEditText.setText(comentar.getComentario());
+
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (!cometarEditText.getText().toString().equals("")) {
+                            comentar.setComentario(cometarEditText.getText().toString());
+                            ComentarTask comentarTask = new ComentarTask(cometarEditText.getText().toString());
+                            comentarTask.execute(null, null, null);
+                            DeletarTask deletarTask = new DeletarTask(info.position);
+                            deletarTask.execute(null, null, null);
+                        }else{
+                            Toast.makeText(ListarTodosComentarios.this,"Campo vazio",Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "Cencelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert.show();
+                return true;
+            case R.id.menu_item_excluir:
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setMessage(getString(R.string.deseja_exclir));
+
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeletarTask deletarTask = new DeletarTask(info.position);
+                        deletarTask.execute(null, null, null);
+                    }
+                });
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alertDialog.show();
+
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public class DeletarTask extends AsyncTask<Void, Void, Void> {
+        private Comentar comentar;
+        int position;
+
+        public DeletarTask(int position) {
+            this.comentar = listar.get(position);
+            this.position = position;
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = getString(R.string.url_rest) + "noticia/descomentar/" + comentar.getId();
+            try {
+
+                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, ListarTodosComentarios.this);
+
+                try {
+                    httpAsyncTask.get(new HttpAsyncTask.FutureCallback() {
+                        @Override
+                        public void onCallback(Object jsonObject, int responseCode) {
+                            switch (responseCode) {
+                                case 200:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            listar.remove(position);
+                                            adpater.notifyDataSetChanged();
+                                        }
+                                    });
+                                    break;
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
             return null;
