@@ -255,10 +255,8 @@ public class ListarTodosComentarios extends AppCompatActivity {
 
                         if (!cometarEditText.getText().toString().equals("")) {
                             comentar.setComentario(cometarEditText.getText().toString());
-                            ComentarTask comentarTask = new ComentarTask(cometarEditText.getText().toString());
-                            comentarTask.execute(null, null, null);
-                            DeletarTask deletarTask = new DeletarTask(info.position);
-                            deletarTask.execute(null, null, null);
+                            EditarTask editarTask=new EditarTask(info.position, comentar.getComentario());
+                            editarTask.execute();
                         }else{
                             Toast.makeText(ListarTodosComentarios.this,"Campo vazio",Toast.LENGTH_SHORT).show();
                         }
@@ -334,6 +332,43 @@ public class ListarTodosComentarios extends AppCompatActivity {
                     e.printStackTrace();
                 }
             } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+    public class EditarTask extends AsyncTask<Void,Void,Void>{
+        int position;
+        Comentar comentar;
+        String texto;
+        public EditarTask(int position, String texto){
+            this.position=position;
+            comentar=listar.get(position);
+            this.texto=texto;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String url=getString(R.string.url_rest)+"noticia/comentario/editar";
+            HttpAsyncTask httpAsyncTask= null;
+            try {
+                httpAsyncTask = new HttpAsyncTask(url,ListarTodosComentarios.this);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            httpAsyncTask.addParams("id",comentar.getId());
+            httpAsyncTask.addParams("idUsuario",comentar.getIdUsuario());
+            httpAsyncTask.addParams("comentario",texto);
+            try {
+                httpAsyncTask.put(new HttpAsyncTask.FutureCallback() {
+                    @Override
+                    public void onCallback(Object jsonObject, int responseCode) {
+                        switch (responseCode) {
+                            case 200:
+                                break;
+                        }
+                    }
+                });
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
