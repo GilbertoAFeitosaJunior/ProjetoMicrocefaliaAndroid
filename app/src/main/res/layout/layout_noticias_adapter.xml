@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingRight="5dp"
-                        android:src="@drawable/ic_comments"
+                        android:src="@drawable/ic_view"
                         android:textColor="@android:color/white" />
 
                     <TextView

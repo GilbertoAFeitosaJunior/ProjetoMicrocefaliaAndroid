@@ -153,4 +153,7 @@
     </string>
     <string name="title_activity_aqwq">Falha ao tentar acessar notícia, verifique sua conexão com a internet e tente novamente.</string>
     <string name="title_activity_detralhe_noticia">DetralheNoticiaActivity</string>
+    <string name="curtido">CURTIDO</string>
+    <string name="title_activity_listar_todos_comentarios">ListarTodosComentarios</string>
+    <string name="escreva_um_comentario">Escreva um comentário...</string>
 </resources>
