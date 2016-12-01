@@ -143,6 +143,16 @@ public class MeuPerfilFragment extends Fragment {
         private boolean opc;
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage(getString(R.string.carregando));
+            progressDialog.show();
+        }
+
+        @Override
         protected Boolean doInBackground(Void... params) {
             String url = getString(R.string.url_rest) + "usuario/exibir/"+usuario.getId(); //lembrar de pedir a gilberto o link
 
@@ -193,7 +203,16 @@ public class MeuPerfilFragment extends Fragment {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+
             return opc;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
     }
 

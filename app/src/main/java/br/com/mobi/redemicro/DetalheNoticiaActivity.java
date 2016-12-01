@@ -27,10 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -78,6 +75,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhe_noticia);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         noticiaBO = new NoticiaBo(this);
 
@@ -201,6 +199,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    opc=false;
                 }
 
             } catch (MalformedURLException e) {
@@ -216,8 +215,6 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             if (aVoid) {
                 Picasso.with(DetalheNoticiaActivity.this).load(noticia.getFoto()).placeholder(android.R.drawable.ic_menu_camera).into(imagemDetalhesNoticia);
                 tituloDetalhes.setText(noticia.getTitulo());
-
-                //String dataPublicacao = new SimpleDateFormat(getString(R.string.data_hora_format)).format(noticia.getData());
                 dataPublicacaoDetalhes.setText("Publicado em: " + noticia.getData());
                 conteudoDetalhes.setText(Html.fromHtml(noticia.getNoticia()).toString());
 

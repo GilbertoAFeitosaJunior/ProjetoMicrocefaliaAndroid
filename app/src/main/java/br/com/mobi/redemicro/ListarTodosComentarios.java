@@ -1,5 +1,6 @@
 package br.com.mobi.redemicro;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,6 +47,7 @@ public class ListarTodosComentarios extends AppCompatActivity {
     private ListView comertarListView;
     private ImageView bntComentar;
     private EditText comentarioUsuario;
+    private ProgressDialog progressDialog;
 
     private Usuario usuario;
     int idNoticia;
@@ -127,6 +129,11 @@ public class ListarTodosComentarios extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(ListarTodosComentarios.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage(getString(R.string.carregando));
+            progressDialog.show();
         }
 
         @Override

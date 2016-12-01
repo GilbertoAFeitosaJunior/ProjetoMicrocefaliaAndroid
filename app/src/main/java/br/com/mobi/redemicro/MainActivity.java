@@ -3,6 +3,9 @@ package br.com.mobi.redemicro;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -11,15 +14,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import br.com.mobi.redemicro.bean.Usuario;
 import br.com.mobi.redemicro.bo.UsuarioBo;
+import br.com.mobi.redemicro.fragment.ForumFragment;
+import br.com.mobi.redemicro.fragment.HopitaisFragment;
 import br.com.mobi.redemicro.fragment.MeuPerfilFragment;
 import br.com.mobi.redemicro.fragment.NoticiaFragment;
 import br.com.mobi.redemicro.util.Constants;
@@ -47,12 +54,13 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NoticiaFragment()).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         exibirViewPerfil();
-
+        navigationView.setItemIconTintList(null);
 
     }
 
@@ -65,7 +73,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -96,6 +103,29 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_noticias:
                 fragment=new NoticiaFragment();
+                break;
+            case R.id.nav_forum:
+                fragment=new ForumFragment();
+                break;
+            case R.id.nav_hospital:
+                fragment=new HopitaisFragment();
+                break;
+            case R.id.nav_page:
+                String url = getString(R.string.link_page);
+                Intent it;
+                try {
+                    MainActivity.this.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                    it=new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/585550184977710"));
+                } catch (Exception e) {
+                    it= new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                }
+                startActivity(it);
+                break;
+            case R.id.nav_share:
+                Toast.makeText(MainActivity.this,"Função em desenvolvimento",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_avaliar:
+                Toast.makeText(MainActivity.this,"Ainda não Disponível na loja",Toast.LENGTH_SHORT).show();
                 break;
         }
 

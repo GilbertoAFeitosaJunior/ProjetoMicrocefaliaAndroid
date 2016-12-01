@@ -10,20 +10,28 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageViewPerfil"
-        android:layout_width="100dp"
-        android:layout_height="90dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"></de.hdodenhof.circleimageview.CircleImageView>
-
-    <TextView
-        android:id="@+id/textViewPerfil"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Android Studio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewPerfil"
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:layout_gravity="center_horizontal"></de.hdodenhof.circleimageview.CircleImageView>
+
+        <TextView
+            android:id="@+id/textViewPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Android Studio"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

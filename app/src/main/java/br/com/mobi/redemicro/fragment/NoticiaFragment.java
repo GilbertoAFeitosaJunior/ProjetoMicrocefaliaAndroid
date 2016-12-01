@@ -1,5 +1,6 @@
 package br.com.mobi.redemicro.fragment;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mobi.redemicro.DetalheNoticiaActivity;
+import br.com.mobi.redemicro.LoginActivity;
 import br.com.mobi.redemicro.R;
 import br.com.mobi.redemicro.adapter.NoticiasAdapter;
 import br.com.mobi.redemicro.bean.Noticia;
@@ -51,6 +54,9 @@ public class NoticiaFragment extends Fragment {
     private boolean loading;
     private String query;
     private Context context;
+    private ProgressDialog progressDialog;
+
+    boolean opc;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,6 +166,7 @@ public class NoticiaFragment extends Fragment {
     }
 
     private class NoticiaTask extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected Void doInBackground(Void... params) {
             try {
@@ -197,6 +204,7 @@ public class NoticiaFragment extends Fragment {
                                     }
                                     noticiaBO.clean();
                                     noticiaBO.insert(noticiaList);
+                                    opc = true;
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -206,6 +214,8 @@ public class NoticiaFragment extends Fragment {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    opc = false;
+
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -216,6 +226,7 @@ public class NoticiaFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
             if (!isCancelled()) {
                 createAdapter();
             }
@@ -223,9 +234,13 @@ public class NoticiaFragment extends Fragment {
         }
     }
 
+
+
     private void createAdapter() {
         if (page == 0) {
-
+                if (!opc) {
+                    Toast.makeText(context,R.string.erro_internet, Toast.LENGTH_SHORT).show();
+                }
             noticiaList = noticiaBO.list();
             adapter = new NoticiasAdapter(noticiaList, context);
             listViewNoticias.setAdapter(adapter);

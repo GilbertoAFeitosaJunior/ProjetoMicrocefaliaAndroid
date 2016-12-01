@@ -38,7 +38,6 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="perfil">Meu perfil</string>
     <string name="mais_tarde">Mais tarde</string>
     <string name="enviar">ENVIAR</string>
@@ -157,4 +156,10 @@
     <string name="title_activity_listar_todos_comentarios">ListarTodosComentarios</string>
     <string name="escreva_um_comentario">Escreva um comentário...</string>
     <string name="deseja_exclir">Deseja realmente excluir o cometário?</string>
+    <string name="forum">Fórum</string>
+    <string name="hospital">Centros Especializados</string>
+    <string name="avalie">Avaliar</string>
+    <string name="page">Curta nosso Facebook</string>
+    <string name="link_page">https://www.facebook.com/ProjectMicrocefalia</string>
+    <string name="erro_internet">Seu dispositivo não está online</string>
 </resources>

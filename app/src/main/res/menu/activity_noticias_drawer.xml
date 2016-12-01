@@ -3,22 +3,39 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_perfil"
+            android:title="@string/perfil"
+            />
+        <item
             android:id="@+id/nav_noticias"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_noticia"
             android:title="@string/noticias" />
         <item
-            android:id="@+id/nav_perfil"
-            android:icon="@drawable/ic_splash"
-            android:title="@string/perfil" />
+            android:id="@+id/nav_forum"
+            android:icon="@drawable/ic_forum"
+            android:title="@string/forum" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_hospital"
+            android:icon="@drawable/ic_hospital"
+            android:title="@string/hospital" />
     </group>
+    <item android:title="Comunicação">
+        <menu>
+            <item
+                android:id="@+id/nav_page"
+                android:icon="@drawable/ic_facebook"
+                android:title="@string/page" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/compartilhar" />
+            <item
+                android:id="@+id/nav_avaliar"
+                android:icon="@drawable/ic_avaliar"
+                android:title="@string/avalie" />
+        </menu>
+    </item>
 
 
 
