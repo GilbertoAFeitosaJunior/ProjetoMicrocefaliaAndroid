@@ -14,11 +14,11 @@
         <item
             android:id="@+id/nav_forum"
             android:icon="@drawable/ic_forum"
-            android:title="@string/forum" />
+            android:title="@string/title_activity_forum" />
         <item
             android:id="@+id/nav_hospital"
             android:icon="@drawable/ic_hospital"
-            android:title="@string/hospital" />
+            android:title="@string/title_activity_hospital" />
     </group>
     <item android:title="Comunicação">
         <menu>

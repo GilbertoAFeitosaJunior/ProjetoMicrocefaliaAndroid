@@ -5,9 +5,11 @@
     tools:context="br.com.mobi.redemicro.fragment.HopitaisFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/listViewEstados"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hospitais" />
+        android:divider="@android:color/white"
+        android:dividerHeight="0dp" />
 
 </FrameLayout>

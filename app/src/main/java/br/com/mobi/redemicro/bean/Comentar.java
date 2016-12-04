@@ -7,11 +7,11 @@ import java.util.Date;
  */
 
 public class Comentar {
-    int id, idUsuario;
-    String nome;
-    String foto;
-    String comentario;
-    Date date;
+    private int id, idUsuario;
+    private String nome;
+    private String foto;
+    private String comentario;
+    private Date date;
 
     public int getId() {
         return id;

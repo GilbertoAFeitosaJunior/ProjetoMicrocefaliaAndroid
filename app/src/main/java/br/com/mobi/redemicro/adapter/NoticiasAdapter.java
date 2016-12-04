@@ -31,6 +31,7 @@ public class NoticiasAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+
     @Override
     public Object getItem(int position) {
         return lista.get(position);

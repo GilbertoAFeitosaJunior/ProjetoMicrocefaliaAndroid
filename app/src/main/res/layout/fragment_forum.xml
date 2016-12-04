@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="br.com.mobi.redemicro.fragment.ForumFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fórum" />
+        android:id="@+id/listViewForum"
+        android:divider="@android:color/white"
+        android:dividerHeight="0dp"/>
 
 </FrameLayout>

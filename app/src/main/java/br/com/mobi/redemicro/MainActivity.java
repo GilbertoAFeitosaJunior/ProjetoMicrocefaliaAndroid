@@ -103,12 +103,16 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_noticias:
                 fragment=new NoticiaFragment();
+                getSupportActionBar().setSubtitle(R.string.noticias);
+
                 break;
             case R.id.nav_forum:
                 fragment=new ForumFragment();
+                getSupportActionBar().setSubtitle(R.string.title_activity_forum);
                 break;
             case R.id.nav_hospital:
                 fragment=new HopitaisFragment();
+                getSupportActionBar().setSubtitle(R.string.title_activity_hospital);
                 break;
             case R.id.nav_page:
                 String url = getString(R.string.link_page);
@@ -122,7 +126,13 @@ public class MainActivity extends AppCompatActivity
                 startActivity(it);
                 break;
             case R.id.nav_share:
-                Toast.makeText(MainActivity.this,"Função em desenvolvimento",Toast.LENGTH_SHORT).show();
+                String urlapp = getString(R.string.linkapp);
+                String mensagem = getString(R.string.compartilhar_main) + "\n" + urlapp;
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, mensagem);
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent, mensagem));
                 break;
             case R.id.nav_avaliar:
                 Toast.makeText(MainActivity.this,"Ainda não Disponível na loja",Toast.LENGTH_SHORT).show();

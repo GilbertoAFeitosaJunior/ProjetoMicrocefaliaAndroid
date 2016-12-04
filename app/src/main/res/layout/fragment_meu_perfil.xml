@@ -45,7 +45,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="16dp"
-                android:layout_toLeftOf="@+id/phone_perfil"
                 android:text="@string/hint_dataNascimento"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 

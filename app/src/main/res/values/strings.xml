@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RedeMicro</string>
+    <string name="linkapp">http://www.link.com</string>
+
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_noticias">NoticiasActivity</string>
@@ -156,10 +158,24 @@
     <string name="title_activity_listar_todos_comentarios">ListarTodosComentarios</string>
     <string name="escreva_um_comentario">Escreva um comentário...</string>
     <string name="deseja_exclir">Deseja realmente excluir o cometário?</string>
-    <string name="forum">Fórum</string>
-    <string name="hospital">Centros Especializados</string>
     <string name="avalie">Avaliar</string>
     <string name="page">Curta nosso Facebook</string>
     <string name="link_page">https://www.facebook.com/ProjectMicrocefalia</string>
-    <string name="erro_internet">Seu dispositivo não está online</string>
+    <string name="erro_internet">Falha ao carregar...</string>
+    <string name="compartilhar_main">"Olha o app sobre microcefalia que encontrei para Android. Baixa aí:"</string>
+    <string name="title_activity_hospital">Centros especializados</string>
+    <string name="ligar">Ligar</string>
+    <string name="title_activity_forum">Fórum</string>
+    <string name="rota">Como chegar</string>
+    <string name="ic_n_forum">Novo fórum</string>
+    <string name="titulo">Título:</string>
+    <string name="msg">mesagem</string>
+    <string name="txt_dialog">"Novo fórum.\n\n"+"Será necessário adicionar o título e a descrição do fórum"</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="title_activity_topicos_forum_adapter">TopicosForumAdapter</string>
+    <string name="ativo">Ativo</string>
+    <string name="status">"Status: "</string>
+    <string name="d_abertura">"Data de Abertura: "</string>
+    <string name="data">DD/MM/YYYY</string>
+    <string name="fechado">Fechado</string>
 </resources>

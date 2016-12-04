@@ -55,6 +55,7 @@ public class NoticiaFragment extends Fragment {
     private String query;
     private Context context;
     private ProgressDialog progressDialog;
+    boolean continuar;
 
     boolean opc;
 
@@ -62,12 +63,14 @@ public class NoticiaFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        continuar=true;
 
         hasMore = true;
         page = 0;
         query = "";
         context = getContext();
         noticiaBO = new NoticiaBo(context);
+        noticiaList = new ArrayList<>();
     }
 
     @Override
@@ -168,6 +171,19 @@ public class NoticiaFragment extends Fragment {
     private class NoticiaTask extends AsyncTask<Void, Void, Void> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if(continuar) {
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage(getString(R.string.carregando));
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+                continuar=false;
+            }
+        }
+
+        @Override
         protected Void doInBackground(Void... params) {
             try {
                 String url = getString(R.string.url_rest) + "noticia/chamada";
@@ -180,7 +196,6 @@ public class NoticiaFragment extends Fragment {
                         public void onCallback(Object jsonObject, int responseCode) {
                             if (responseCode == 200) {
                                 try {
-                                    noticiaList = new ArrayList<>();
                                     JSONArray jsonArray = (JSONArray) jsonObject;
 
                                     if (jsonArray.length() == 0) {
@@ -226,6 +241,10 @@ public class NoticiaFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                continuar=false;
+            }
 
             if (!isCancelled()) {
                 createAdapter();

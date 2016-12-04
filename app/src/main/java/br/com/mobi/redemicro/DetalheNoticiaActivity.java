@@ -54,7 +54,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
 
     private Noticia noticia;
     private ImageView imagemDetalhesNoticia;
-    private Button like, curtidas,maisComentarios;
+    private Button like, curtidas, maisComentarios;
     private TextView conteudoDetalhes, tituloDetalhes, dataPublicacaoDetalhes;
     private ListView comertarListView;
     private NoticiaBo noticiaBO;
@@ -64,7 +64,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     private List<Curtir> listaDeCurtir;
     private String comentarioUsuario = "";
     private List<Comentar> listar;
-    List<Comentar>listaresun;
+    List<Comentar> listaresun;
     private ComentarAdapater adpater;
 
     private ProgressDialog progressDialog;
@@ -76,6 +76,8 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         noticiaBO = new NoticiaBo(this);
 
@@ -129,6 +131,16 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             registerForContextMenu(this.comertarListView);
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void FazerLogin() {
@@ -199,7 +211,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    opc=false;
+                    opc = false;
                 }
 
             } catch (MalformedURLException e) {
@@ -357,7 +369,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                                 listCurtir.setId_usuario(json.getInt("id_usuario"));
                                 listCurtir.setNome(json.getString("nome"));
                                 listCurtir.setFoto(json.getString("foto"));
-                                if(usuario!=null) {
+                                if (usuario != null) {
 
                                     if (listCurtir.getId_usuario() == usuario.getId()) {
                                         opc = true;
@@ -404,7 +416,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
                 } else {
                     draw = ContextCompat.getDrawable(DetalheNoticiaActivity.this, R.drawable.ic_like_off);
                 }
-            }else {
+            } else {
                 draw = ContextCompat.getDrawable(DetalheNoticiaActivity.this, R.drawable.ic_like_off);
             }
             return null;
@@ -509,46 +521,48 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            String url = getString(R.string.url_rest) + "noticia/comentarios/"+noticia.getIdNoticia();
-            try {
-                HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
+            if (noticia != null) {
+                String url = getString(R.string.url_rest) + "noticia/comentarios/" + noticia.getIdNoticia();
                 try {
-                    httpAsyncTask.get(new HttpAsyncTask.FutureCallback() {
-                        @Override
-                        public void onCallback(Object jsonObject, int responseCode) {
-                            JSONArray jsonArray = (JSONArray) jsonObject;
-                            listar = new ArrayList<>();
+                    HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
+                    try {
+                        httpAsyncTask.get(new HttpAsyncTask.FutureCallback() {
+                            @Override
+                            public void onCallback(Object jsonObject, int responseCode) {
+                                JSONArray jsonArray = (JSONArray) jsonObject;
+                                listar = new ArrayList<>();
 
 
-                            try {
+                                try {
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                                    JSONObject json = jsonArray.getJSONObject(i);
-                                    Comentar comentar = new Comentar();
+                                        JSONObject json = jsonArray.getJSONObject(i);
+                                        Comentar comentar = new Comentar();
 
-                                    comentar.setId(json.getInt("id"));
-                                    comentar.setIdUsuario(json.getInt("idUsuario"));
-                                    comentar.setNome(json.getString("nome"));
-                                    comentar.setFoto(json.getString("foto"));
-                                    comentar.setComentario(json.getString("comentario"));
-                                    comentar.setDate(new Date(json.getLong("date")));
+                                        comentar.setId(json.getInt("id"));
+                                        comentar.setIdUsuario(json.getInt("idUsuario"));
+                                        comentar.setNome(json.getString("nome"));
+                                        comentar.setFoto(json.getString("foto"));
+                                        comentar.setComentario(json.getString("comentario"));
+                                        comentar.setDate(new Date(json.getLong("date")));
 
-                                    listar.add(comentar);
+                                        listar.add(comentar);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
 
-                        }
-                    });
-                } catch (Exception e) {
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             }
             return null;
         }
@@ -556,7 +570,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if(listar!=null){
+            if (listar != null) {
                 listarComentarios();
             }
         }
@@ -570,16 +584,16 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     }
 
     private List<Comentar> listaComente(List<Comentar> listar) {
-        listaresun=new ArrayList<>();
-        int i=listar.size();
-        if(listar.size()>5){
-            i=5;
+        listaresun = new ArrayList<>();
+        int i = listar.size();
+        if (listar.size() > 5) {
+            i = 5;
             maisComentarios.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
             maisComentarios.setVisibility(View.GONE);
         }
-        for(int tamanho=0;tamanho<i;tamanho++){
+        for (int tamanho = 0; tamanho < i; tamanho++) {
             listaresun.add(listar.get(tamanho));
         }
         return listaresun;
@@ -602,8 +616,8 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
     }
 
     public void listarTodosComentarios(View view) {
-        Intent intent=new Intent(this, ListarTodosComentarios.class);
-        intent.putExtra("idNoticia",noticia.getIdNoticia());
+        Intent intent = new Intent(this, ListarTodosComentarios.class);
+        intent.putExtra("idNoticia", noticia.getIdNoticia());
         startActivity(intent);
     }
 
@@ -614,7 +628,7 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Comentar comentar = (Comentar) this.comertarListView.getItemAtPosition(info.position);
 
-        if (usuario.getId()==(comentar.getIdUsuario())) {
+        if (usuario.getId() == (comentar.getIdUsuario())) {
             getMenuInflater().inflate(R.menu.menu_contexto_excluir_editar, menu);
         }
     }
@@ -642,10 +656,10 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
 
                         if (!cometarEditText.getText().toString().equals("")) {
                             comentar.setComentario(cometarEditText.getText().toString());
-                            EditarTask editarTask=new EditarTask(info.position, comentar.getComentario());
+                            EditarTask editarTask = new EditarTask(info.position, comentar.getComentario());
                             editarTask.execute();
-                        }else{
-                            Toast.makeText(DetalheNoticiaActivity.this,"Campo vazio",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(DetalheNoticiaActivity.this, "Campo vazio", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -684,15 +698,15 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
         private Comentar comentar;
         int position;
 
-        public DeletarTask( int position) {
+        public DeletarTask(int position) {
             this.comentar = listar.get(position);
-            this.position=position;
+            this.position = position;
 
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            String url = getString(R.string.url_rest) + "noticia/descomentar/"+comentar.getId();
+            String url = getString(R.string.url_rest) + "noticia/descomentar/" + comentar.getId();
             try {
 
                 HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
@@ -724,27 +738,30 @@ public class DetalheNoticiaActivity extends AppCompatActivity {
             return null;
         }
     }
-    public class EditarTask extends AsyncTask<Void,Void,Void>{
+
+    public class EditarTask extends AsyncTask<Void, Void, Void> {
         int position;
         Comentar comentar;
         String texto;
-        public EditarTask(int position, String texto){
-            this.position=position;
-            comentar=listaresun.get(position);
-            this.texto=texto;
+
+        public EditarTask(int position, String texto) {
+            this.position = position;
+            comentar = listaresun.get(position);
+            this.texto = texto;
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
-            String url=getString(R.string.url_rest)+"noticia/comentario/editar";
-            HttpAsyncTask httpAsyncTask= null;
+            String url = getString(R.string.url_rest) + "noticia/comentario/editar";
+            HttpAsyncTask httpAsyncTask = null;
             try {
-                httpAsyncTask = new HttpAsyncTask(url,DetalheNoticiaActivity.this);
+                httpAsyncTask = new HttpAsyncTask(url, DetalheNoticiaActivity.this);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            httpAsyncTask.addParams("id",comentar.getId());
-            httpAsyncTask.addParams("idUsuario",comentar.getIdUsuario());
-            httpAsyncTask.addParams("comentario",texto);
+            httpAsyncTask.addParams("id", comentar.getId());
+            httpAsyncTask.addParams("idUsuario", comentar.getIdUsuario());
+            httpAsyncTask.addParams("comentario", texto);
             try {
                 httpAsyncTask.put(new HttpAsyncTask.FutureCallback() {
                     @Override
