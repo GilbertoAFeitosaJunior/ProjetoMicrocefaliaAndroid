@@ -67,6 +67,9 @@ public class ForumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forum);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         usuarioBO = new UsuarioBo(this);
         usuario = usuarioBO.get(null, null);
         SharedPreferences preferences = getSharedPreferences(Constants.APP, MODE_PRIVATE);
@@ -91,9 +94,9 @@ public class ForumActivity extends AppCompatActivity {
                 break;
             case R.id.ic_forum:
                 LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View viewHospital = layoutInflater.inflate(R.layout.forum_alert_dialog, null);
-                final EditText edtTitulo = (EditText) findViewById(R.id.edt_titulo);
-                final EditText edtMsg = (EditText) findViewById(R.id.edt_msg);
+                View viewHospital = layoutInflater.inflate(R.layout.forum_alert_dialog, null);
+                final EditText edtTitulo = (EditText) viewHospital.findViewById(R.id.edt_titulo);
+                final EditText edtMsg = (EditText) viewHospital.findViewById(R.id.edt_msg);
 
                 usuario = usuarioBO.get(null, null);
                 if (usuario == null) {
@@ -105,13 +108,13 @@ public class ForumActivity extends AppCompatActivity {
                     alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Comentar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!titulo.equals("") && !msg.equals("")) {
-                                titulo = edtTitulo.getText().toString();
-                                msg = edtMsg.getText().toString();
+                            titulo = edtTitulo.getText().toString();
+                            msg = edtMsg.getText().toString();
+                            if (titulo.equals("") || msg.equals("")) {
+                                Toast.makeText(ForumActivity.this, getString(R.string.toast_completar), Toast.LENGTH_SHORT).show();
+                            } else {
                                 NewForumTask newForumTask = new NewForumTask();
                                 newForumTask.execute(null, null, null);
-                            } else {
-                                Toast.makeText(ForumActivity.this, getString(R.string.toast_completar), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -220,7 +223,11 @@ public class ForumActivity extends AppCompatActivity {
                                         forum.setFotoUsuario(json.getString("fotoUsuario"));
                                         forum.setNomeModerador(json.getString("nomeModerador"));
                                         forum.setEspecialidade(json.getString("especialidade"));
-                                        forum.setDataFechamento(new Date(json.getLong("dataFechamento")));
+                                        try {
+                                            forum.setDataFechamento(new Date(json.getLong("dataFechamento")));
+                                        }catch (Exception e){
+                                            e.getMessage();
+                                        }
                                         forum.setAtivo(json.getBoolean("ativo"));
 
 

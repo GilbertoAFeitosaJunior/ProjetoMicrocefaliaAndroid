@@ -14,4 +14,5 @@
     <dimen name="app_bar_height">230dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="foto_list">60dp</dimen>
+    <dimen name="foto_list_forum">80dp</dimen>
 </resources>

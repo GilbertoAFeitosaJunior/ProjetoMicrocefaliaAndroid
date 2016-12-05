@@ -1,6 +1,7 @@
 package br.com.mobi.redemicro.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -61,8 +62,10 @@ public class TopicosForumAdapter extends BaseAdapter {
         TextView status=(TextView)view.findViewById(R.id.txt_status);
         if(topicosForum.isAtivo()!=true){
         status.setText(context.getString(R.string.ativo));
+            status.setTextColor(Color.parseColor("#00ff00"));
         }else{
             status.setText(context.getString(R.string.fechado));
+            status.setTextColor(Color.parseColor("#FF0000"));
         }
         TextView data=(TextView)view.findViewById(R.id.txt_data);
         if(topicosForum.getDataAbertura()!=null){
