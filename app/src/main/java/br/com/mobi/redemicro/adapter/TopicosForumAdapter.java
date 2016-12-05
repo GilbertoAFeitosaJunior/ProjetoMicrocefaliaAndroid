@@ -53,7 +53,7 @@ public class TopicosForumAdapter extends BaseAdapter {
 
         TopicosForum topicosForum = lista.get(position);
 
-        Picasso.with(context).load(topicosForum.getFotoUsuario()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto));;
+        Picasso.with(context).load(topicosForum.getFotoUsuario()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto));
 
         TextView titulo=(TextView)view.findViewById(R.id.txt_Titulo);
         titulo.setText(topicosForum.getTitulo());

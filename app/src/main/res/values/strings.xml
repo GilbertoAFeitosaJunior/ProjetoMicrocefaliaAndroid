@@ -179,4 +179,14 @@
     <string name="data">DD/MM/YYYY</string>
     <string name="fechado">Fechado</string>
     <string name="usuario">"Usuário: "</string>
+    <string name="title_activity_forum_msg">ForumMsgActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_msg">adicionar Mensagem</string>
+    <string name="moderador">Moderador:</string>
+    <string name="d_fechamento">Data de encerramento:</string>
+    <string name="especialidade">Especialidade:</string>
+    <string name="data_resposta">Data da resposta</string>
 </resources>

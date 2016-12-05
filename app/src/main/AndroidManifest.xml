@@ -66,6 +66,10 @@
         <activity
             android:name=".adapter.TopicosForumAdapter"
             android:label="@string/title_activity_topicos_forum_adapter"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ForumMsgActivity"
+            android:label="@string/title_activity_forum_msg"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

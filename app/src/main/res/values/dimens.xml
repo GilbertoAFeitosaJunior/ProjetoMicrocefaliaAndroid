@@ -15,4 +15,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="foto_list">60dp</dimen>
     <dimen name="foto_list_forum">80dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

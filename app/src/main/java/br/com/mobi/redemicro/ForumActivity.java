@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,7 +53,7 @@ public class ForumActivity extends AppCompatActivity {
     private UsuarioBo usuarioBO;
     private Usuario usuario;
     private ProgressDialog progressDialog;
-    private int noticiaId;
+    private int forumId;
     private List<TopicosForum> forumList;
     ListForumTask listForumTask;
 
@@ -73,10 +74,22 @@ public class ForumActivity extends AppCompatActivity {
         usuarioBO = new UsuarioBo(this);
         usuario = usuarioBO.get(null, null);
         SharedPreferences preferences = getSharedPreferences(Constants.APP, MODE_PRIVATE);
-        noticiaId = preferences.getInt("FORUM", 0);
+        forumId = preferences.getInt("FORUM", 0);
         listViewTopicosForum = (ListView)findViewById(R.id.listViewTopicosForum);
         listForumTask=new ListForumTask();
         listForumTask.execute(null,null,null);
+        listViewTopicosForum.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TopicosForum forum = forumList.get(position);
+
+                SharedPreferences.Editor preferences = getSharedPreferences(Constants.APP, Context.MODE_PRIVATE).edit();
+                preferences.putInt("FORUMTOPICO", forum.getIdTopico());
+                preferences.commit();
+
+                startActivity(new Intent(ForumActivity.this, ForumMsgActivity.class));
+            }
+        });
 
     }
 
@@ -158,7 +171,7 @@ public class ForumActivity extends AppCompatActivity {
 
             try {
                 HttpAsyncTask httpAsyncTask = new HttpAsyncTask(url, ForumActivity.this);
-                httpAsyncTask.addParams("idCategoria", noticiaId);
+                httpAsyncTask.addParams("idCategoria", forumId);
                 httpAsyncTask.addParams("idUsuario", usuario.getId());
                 httpAsyncTask.addParams("titulo", titulo);
                 httpAsyncTask.addParams("mensagem",msg);
@@ -199,7 +212,7 @@ public class ForumActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String url = getString(R.string.url_rest) + "forum/topicos/"+noticiaId;
+                String url = getString(R.string.url_rest) + "forum/topicos/"+forumId;
                 HttpAsyncTask task = new HttpAsyncTask(url, ForumActivity.this);
 
                 try {
