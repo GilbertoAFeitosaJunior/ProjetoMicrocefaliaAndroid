@@ -41,8 +41,10 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.mobi.redemicro.adapter.TopicosForumAdapter;
+import br.com.mobi.redemicro.bean.Pergunta;
 import br.com.mobi.redemicro.bean.TopicosForum;
 import br.com.mobi.redemicro.bean.Usuario;
+import br.com.mobi.redemicro.bo.PerguntaBo;
 import br.com.mobi.redemicro.bo.UsuarioBo;
 import br.com.mobi.redemicro.util.Constants;
 import br.com.mobi.redemicro.util.HttpAsyncTask;
@@ -51,7 +53,9 @@ public class ForumActivity extends AppCompatActivity {
 
     private String titulo = "", msg = "";
     private UsuarioBo usuarioBO;
-    private Usuario usuario;
+    private Usuario usuario=null;
+    private PerguntaBo perguntaBo;
+    private Pergunta pergunta;
     private ProgressDialog progressDialog;
     private int forumId;
     private List<TopicosForum> forumList;
@@ -70,6 +74,8 @@ public class ForumActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        perguntaBo=new PerguntaBo(this);
+        pergunta=new Pergunta();
 
         usuarioBO = new UsuarioBo(this);
         usuario = usuarioBO.get(null, null);
@@ -83,6 +89,19 @@ public class ForumActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TopicosForum forum = forumList.get(position);
 
+
+                pergunta.setIdTopico(forum.getIdTopico());
+                pergunta.setTitulo(forum.getTitulo());
+                pergunta.setMensagem(forum.getMensagem());
+                pergunta.setNomeUsuario(forum.getNomeUsuario());
+                pergunta.setFotoUsuario(forum.getFotoUsuario());
+                pergunta.setDataAbertura(forum.getDataAbertura());
+                pergunta.setDataFechamento(forum.getDataFechamento());
+                pergunta.setNomeModerador(forum.getNomeModerador());
+                pergunta.setAtivo(forum.isAtivo());
+                pergunta.setEspecialidade(forum.getEspecialidade());
+                perguntaBo.clean();
+                perguntaBo.insert(pergunta);
                 SharedPreferences.Editor preferences = getSharedPreferences(Constants.APP, Context.MODE_PRIVATE).edit();
                 preferences.putInt("FORUMTOPICO", forum.getIdTopico());
                 preferences.commit();

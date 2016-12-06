@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,11 @@ import br.com.mobi.redemicro.ForumActivity;
 import br.com.mobi.redemicro.ForumMsgActivity;
 import br.com.mobi.redemicro.R;
 import br.com.mobi.redemicro.adapter.TopicosForumAdapter;
+import br.com.mobi.redemicro.bean.Mensagem;
+import br.com.mobi.redemicro.bean.Pergunta;
 import br.com.mobi.redemicro.bean.TopicosForum;
 import br.com.mobi.redemicro.bean.Usuario;
+import br.com.mobi.redemicro.bo.PerguntaBo;
 import br.com.mobi.redemicro.bo.UsuarioBo;
 import br.com.mobi.redemicro.util.Constants;
 import br.com.mobi.redemicro.util.HttpAsyncTask;
@@ -41,12 +45,11 @@ import br.com.mobi.redemicro.util.HttpAsyncTask;
 
 public class PerguntaFragment extends Fragment {
 
-    private String titulo = "", msg = "";
-    private UsuarioBo usuarioBO;
-    private Usuario usuario;
     private ProgressDialog progressDialog;
     private int forumId;
-    TopicosForum forum = new TopicosForum();
+    private Pergunta forum;
+    private PerguntaBo perguntaBo;
+    Mensagem mensagem;
 
     View view;
     private boolean opc;
@@ -62,17 +65,53 @@ public class PerguntaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.APP, Context.MODE_PRIVATE);
         forumId = preferences.getInt("FORUMTOPICO", 0);
+        MensagemTask mensagemTask=new MensagemTask();
+        mensagemTask.execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_pergunta, container, false);
+        perguntaBo=new PerguntaBo(getContext());
+        forum = perguntaBo.get(null,null);
+        ( (CardView)view.findViewById(R.id.card)).setVisibility(View.GONE);
+
+        TextView titulo = (TextView) view.findViewById(R.id.txt_Titulo);
+        TextView msg = (TextView) view.findViewById(R.id.txt_msg);
+        TextView usuario = (TextView) view.findViewById(R.id.txt_usuario);
+        TextView status = (TextView) view.findViewById(R.id.txt_status);
+        TextView dataAbertura=(TextView) view.findViewById(R.id.txt_data);
+        TextView dataFecha=(TextView) view.findViewById(R.id.txt_data_fecha);
+        TextView moderador=(TextView) view.findViewById(R.id.txt_moderador);
+        TextView especialdade=(TextView) view.findViewById(R.id.txt_especialidade);
+
+        Picasso.with(getContext()).load(forum.getFotoUsuario()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto));
+        titulo.setText(forum.getTitulo());
+        msg.setText(forum.getMensagem());
+        usuario.setText(forum.getNomeUsuario());
+        dataAbertura.setText(new SimpleDateFormat("dd/MM/yyyy").format(forum.getDataAbertura()));
+
+        if (forum.isAtivo() != true) {
+            status.setText(getContext().getString(R.string.ativo));
+            status.setTextColor(Color.parseColor("#00ff00"));
+            dataFecha.setText(new SimpleDateFormat("dd/MM/yyyy").format(forum.getDataFechamento()));
+            dataAbertura.setVisibility(View.VISIBLE);
+            moderador.setText(forum.getNomeModerador());
+            moderador.setVisibility(View.VISIBLE);
+            especialdade.setText(forum.getEspecialidade());
+            especialdade.setVisibility(View.VISIBLE);
+        } else {
+            status.setText(getContext().getString(R.string.fechado));
+            status.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+
 
         return view;
     }
 
-    private class ListForumTask extends AsyncTask<Void, Void, Void> {
+    private class MensagemTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -87,35 +126,46 @@ public class PerguntaFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String url = getString(R.string.url_rest) + "forum/mensagem" + forumId;
+                String url = getString(R.string.url_rest) + "forum/mensagem/"+forumId;
                 HttpAsyncTask task = new HttpAsyncTask(url, getContext());
 
                 try {
                     task.get(new HttpAsyncTask.FutureCallback() {
                         @Override
-                        public void onCallback(Object jsonObject, int responseCode) throws JSONException {
-                            JSONObject json = (JSONObject) jsonObject;
+                        public void onCallback(Object jsonObject, int responseCode) {
+                            if (responseCode == 200) {
+                                try {
+                                    JSONArray jsonArray = (JSONArray) jsonObject;
 
-                            forum.setIdTopico(json.getInt("idTopico"));
-                            forum.setTitulo(json.getString("titulo"));
-                            forum.setMensagem(json.getString("mensagem"));
-                            forum.setDataAbertura(new Date(json.getLong("dataAbertura")));
-                            forum.setNomeUsuario(json.getString("nomeUsuario"));
-                            forum.setFotoUsuario(json.getString("fotoUsuario"));
-                            forum.setNomeModerador(json.getString("nomeModerador"));
-                            forum.setEspecialidade(json.getString("especialidade"));
-                            try {
-                                forum.setDataFechamento(new Date(json.getLong("dataFechamento")));
-                            } catch (Exception e) {
-                                e.getMessage();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject json = jsonArray.getJSONObject(i);
+                                      if(json.getBoolean("revisado")==true) {
+                                            mensagem = new Mensagem();
+                                            mensagem.setNome(json.getString("nome"));
+                                            mensagem.setFoto(json.getString("foto"));
+                                            mensagem.setMensagem(json.getString("mensagem"));
+                                            mensagem.setRevisado(json.getBoolean("revisado"));
+                                            try {
+                                                mensagem.setData(new Date(json.getLong("data")));
+                                            } catch (Exception e) {
+                                                e.getMessage();
+                                            }
+                                            opc=true;
+                                            break;
+                                        }
+                                        opc=false;
+
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            forum.setAtivo(json.getBoolean("ativo"));
-                            opc = true;
                         }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    opc = false;
+                    opc=false;
 
                 }
             } catch (MalformedURLException e) {
@@ -132,42 +182,28 @@ public class PerguntaFragment extends Fragment {
                 progressDialog.dismiss();
             }
             if (!isCancelled()) {
-                createAdapter();
+                createAdapterMsg();
             }
 
         }
     }
+    private void createAdapterMsg() {
+        if (opc) {
+            ( (CardView)view.findViewById(R.id.card)).setVisibility(View.VISIBLE);
+            Picasso.with(getContext()).load(mensagem.getFoto()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto_res));
 
-    private void createAdapter() {
-        if (!opc) {
-            Toast.makeText(getContext(), R.string.erro_internet, Toast.LENGTH_SHORT).show();
-        } else {
-            TextView titulo = (TextView) view.findViewById(R.id.txt_Titulo);
-            TextView msg = (TextView) view.findViewById(R.id.txt_msg);
-            TextView usuario = (TextView) view.findViewById(R.id.txt_usuario);
-            TextView status = (TextView) view.findViewById(R.id.txt_status);
-            TextView dataAbertura=(TextView) view.findViewById(R.id.txt_data);
-            TextView dataFecha=(TextView) view.findViewById(R.id.txt_data_fecha);
-            TextView moderador=(TextView) view.findViewById(R.id.txt_moderador);
-            TextView especialdade=(TextView) view.findViewById(R.id.txt_especialidade);
-
-            Picasso.with(getContext()).load(forum.getFotoUsuario()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto));
-            titulo.setText(forum.getTitulo());
-            msg.setText(forum.getMensagem());
-            usuario.setText(forum.getNomeUsuario());
-            dataAbertura.setText(new SimpleDateFormat("dd/MM/yyyy").format(forum.getDataAbertura()));
-
-            if (forum.isAtivo() != true) {
-                status.setText(getContext().getString(R.string.ativo));
-                status.setTextColor(Color.parseColor("#00ff00"));
-                dataFecha.setText(new SimpleDateFormat("dd/MM/yyyy").format(forum.getDataFechamento()));
-                moderador.setText(forum.getNomeModerador());
-                especialdade.setText(forum.getEspecialidade());
-            } else {
-                status.setText(getContext().getString(R.string.fechado));
-                status.setTextColor(Color.parseColor("#FF0000"));
+            TextView usuario=(TextView)view.findViewById(R.id.txt_usuario_resposta);
+            usuario.setText(mensagem.getNome());
+            TextView data=(TextView)view.findViewById(R.id.txt_data_resposta);
+            if(mensagem.getData()!=null){
+                data.setText(new SimpleDateFormat("dd/MM/yyyy").format(mensagem.getData()));
             }
+            TextView msg=(TextView)view.findViewById(R.id.txt_msg_resposta);
+            msg.setText(mensagem.getMensagem());
+        }else {
+            ( (CardView)view.findViewById(R.id.card)).setVisibility(View.GONE);
         }
+        loading = true;
     }
 
 }

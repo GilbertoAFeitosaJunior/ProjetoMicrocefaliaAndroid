@@ -142,8 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -166,8 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,8 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -211,7 +208,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:visibility="gone"
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -246,12 +243,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="@string/usuario"
-                            android:textColor="@color/grey_800" />
 
                         <TextView
                             android:id="@+id/txt_usuario_resposta"
@@ -261,59 +252,28 @@
                             android:textStyle="bold"
                             android:textColor="@android:color/black"/>
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_below="@+id/layout8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/data_resposta"
-                            android:textColor="@android:color/black" />
-
-                        <TextView
+                            android:gravity="right"
                             android:id="@+id/txt_data_resposta"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="DD/MM/YYYY"
                             android:textColor="#00ff00" />
+
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/txt_msg_resposta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="Título"
+                        android:textColor="@android:color/black" />
+
                 </LinearLayout>
 
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/view2"
-                android:layout_below="@+id/layout7"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="@dimen/foto_list_forum"/>
-
-            <LinearLayout
-                android:layout_below="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_msg_resposta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Título"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
