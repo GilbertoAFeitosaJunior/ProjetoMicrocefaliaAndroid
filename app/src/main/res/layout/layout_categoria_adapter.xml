@@ -9,11 +9,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_top_edit"
-        android:layout_marginRight="@dimen/margin_top_edit"
         android:layout_marginTop="@dimen/margin_top_edit"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="1dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         >

@@ -61,6 +61,7 @@ public class PerguntaFragment extends Fragment {
     private TextView especialdade;
 
     View view;
+
     private boolean opc;
     private boolean loading;
 

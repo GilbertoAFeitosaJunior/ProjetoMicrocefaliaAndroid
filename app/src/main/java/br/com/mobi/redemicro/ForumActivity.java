@@ -200,8 +200,6 @@ public class ForumActivity extends AppCompatActivity {
                     public void onCallback(Object jsonObject, int responseCode) {
                         switch (responseCode) {
                             case 200:
-                                listForumTask=new ListForumTask();
-                                listForumTask.execute();
                                 Toast.makeText(ForumActivity.this,"Ok",Toast.LENGTH_SHORT).show();
                                 break;
                             case 400:
@@ -214,6 +212,13 @@ public class ForumActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            listForumTask=new ListForumTask();
+            listForumTask.execute();
         }
     }
     private class ListForumTask extends AsyncTask<Void, Void, Void> {
@@ -300,7 +305,6 @@ public class ForumActivity extends AppCompatActivity {
     private void createAdapter() {
         adapter = new TopicosForumAdapter(forumList, ForumActivity.this);
         if (!opc) {
-            Toast.makeText(ForumActivity.this,R.string.erro_internet, Toast.LENGTH_SHORT).show();
         }else {
             for(TopicosForum forum: forumList){
                 //synchronized (adapter) {

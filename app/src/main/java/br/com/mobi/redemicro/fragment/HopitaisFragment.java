@@ -89,6 +89,9 @@ public class HopitaisFragment extends Fragment {
         });
         return view;
     }
+
+
+
     private class EstadoTask extends AsyncTask<Void, Void, Void> {
 
         @Override

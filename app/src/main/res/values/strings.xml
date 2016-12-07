@@ -166,14 +166,14 @@
     <string name="title_activity_hospital">Centros especializados</string>
     <string name="ligar">Ligar</string>
     <string name="title_activity_forum">Fórum</string>
-    <string name="rota">Como chegar</string>
+    <string name="rota">" Como chegar"</string>
     <string name="ic_n_forum">Novo fórum</string>
     <string name="titulo">Título:</string>
     <string name="msg">descrição:</string>
     <string name="txt_dialog">Novo fórum.</string>
     <string name="cancelar">Cancelar</string>
     <string name="title_activity_topicos_forum_adapter">TopicosForumAdapter</string>
-    <string name="ativo">Ativo</string>
+    <string name="ativo">Aberto</string>
     <string name="status">"Status: "</string>
     <string name="d_abertura">"Data de Abertura: "</string>
     <string name="data">DD/MM/YYYY</string>

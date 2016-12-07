@@ -138,7 +138,6 @@ public class MsgFragment extends Fragment {
                     public void onCallback(Object jsonObject, int responseCode) {
                         switch (responseCode) {
                             case 200:
-                                Toast.makeText(getContext(),"Ok",Toast.LENGTH_SHORT).show();
                                 break;
                             case 400:
                                 Toast.makeText(getContext(),"erro",Toast.LENGTH_SHORT).show();
@@ -150,6 +149,13 @@ public class MsgFragment extends Fragment {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            MensagemTask mensagemTask=new MensagemTask();
+            mensagemTask.execute();
         }
     }
 
@@ -254,7 +260,6 @@ public class MsgFragment extends Fragment {
         listViewMensagem = (ListView) getView().findViewById(R.id.listViewMensagem);
         adapter = new MensagemAdapter(mensagemList, getContext());
         if (!opc) {
-            Toast.makeText(getContext(), R.string.erro_internet, Toast.LENGTH_SHORT).show();
         } else {
             listViewMensagem.setAdapter(adapter);
         }
