@@ -56,58 +56,6 @@ public class HospitalActivity extends AppCompatActivity {
         HospitalTask hospitalTask = new HospitalTask();
         hospitalTask.execute();
 
-        /*listViewHopitais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Hospital hospital = hospitalList.get(position);
-                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View viewHospital = layoutInflater.inflate(R.layout.hospital_alert_dialog, null);
-                Button ligar = (Button) viewHospital.findViewById(R.id.foneButton);
-                Button compartilhar = (Button) viewHospital.findViewById(R.id.shareButton);
-                ligar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_CALL);
-                            intent.setData(Uri.parse("tel:" + hospital.getFone()));
-                            if (ActivityCompat.checkSelfPermission(HospitalActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return;
-                            }
-                            startActivity(intent);
-                        }catch (Exception e){
-                            e.getMessage();
-                        }
-                    }
-                });
-                compartilhar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            String mensagem = "APP: "+getString(R.string.app_name)+ "\n\n"
-                                    +hospital.getNome() + "\n\nLocalização: "+hospital.getLocalizacao()+"\nFone: "
-                                    +hospital.getFone()+"  \nPúblico: "+hospital.getPublico()+"\n\n"+hospital.getAtendimento() ;
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_SEND);
-                            intent.putExtra(Intent.EXTRA_TEXT, mensagem);
-                            intent.setType("text/plain");
-                            startActivity(Intent.createChooser(intent, mensagem));
-                            startActivity(intent);
-                        }catch (Exception e){
-                            e.getMessage();
-                        }
-                    }
-                });
-
-            }
-        });*/
-
     }
 
 

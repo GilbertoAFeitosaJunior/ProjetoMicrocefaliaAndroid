@@ -49,7 +49,15 @@ public class PerguntaFragment extends Fragment {
     private int forumId;
     private Pergunta forum;
     private PerguntaBo perguntaBo;
-    Mensagem mensagem;
+    private Mensagem mensagem;
+    private TextView titulo;
+    private TextView msg;
+    private TextView usuario;
+    private TextView status;
+    private TextView dataAbertura;
+    private TextView dataFecha;
+    private TextView moderador;
+    private TextView especialdade;
 
     View view;
     private boolean opc;
@@ -65,6 +73,19 @@ public class PerguntaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.APP, Context.MODE_PRIVATE);
         forumId = preferences.getInt("FORUMTOPICO", 0);
+
+        titulo = (TextView) view.findViewById(R.id.txt_Titulo);
+        msg = (TextView) view.findViewById(R.id.txt_msg);
+        usuario = (TextView) view.findViewById(R.id.txt_usuario);
+        status = (TextView) view.findViewById(R.id.txt_status);
+        dataAbertura=(TextView) view.findViewById(R.id.txt_data);
+        dataFecha=(TextView) view.findViewById(R.id.txt_data_fecha);
+        dataFecha.setVisibility(View.GONE);
+        moderador=(TextView) view.findViewById(R.id.txt_moderador);
+        moderador.setVisibility(View.GONE);
+        especialdade=(TextView) view.findViewById(R.id.txt_especialidade);
+        especialdade.setVisibility(View.GONE);
+
         MensagemTask mensagemTask=new MensagemTask();
         mensagemTask.execute();
     }
@@ -77,14 +98,7 @@ public class PerguntaFragment extends Fragment {
         forum = perguntaBo.get(null,null);
         ( (CardView)view.findViewById(R.id.card)).setVisibility(View.GONE);
 
-        TextView titulo = (TextView) view.findViewById(R.id.txt_Titulo);
-        TextView msg = (TextView) view.findViewById(R.id.txt_msg);
-        TextView usuario = (TextView) view.findViewById(R.id.txt_usuario);
-        TextView status = (TextView) view.findViewById(R.id.txt_status);
-        TextView dataAbertura=(TextView) view.findViewById(R.id.txt_data);
-        TextView dataFecha=(TextView) view.findViewById(R.id.txt_data_fecha);
-        TextView moderador=(TextView) view.findViewById(R.id.txt_moderador);
-        TextView especialdade=(TextView) view.findViewById(R.id.txt_especialidade);
+
 
         Picasso.with(getContext()).load(forum.getFotoUsuario()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto));
         titulo.setText(forum.getTitulo());
@@ -103,7 +117,7 @@ public class PerguntaFragment extends Fragment {
             especialdade.setVisibility(View.VISIBLE);
         } else {
             status.setText(getContext().getString(R.string.fechado));
-            status.setTextColor(Color.parseColor("#FF0000"));
+            status.setTextColor(Color.parseColor("#ff0000"));
         }
 
 

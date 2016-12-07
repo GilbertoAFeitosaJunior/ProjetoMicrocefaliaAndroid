@@ -9,11 +9,11 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
         <RelativeLayout
+            android:paddingTop="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:background="@android:drawable/ic_menu_camera"
                     android:id="@+id/img_foto"
                     android:layout_width="@dimen/foto_list"
                     android:layout_height="@dimen/foto_list"
@@ -38,11 +39,88 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="2dp">
+
+                        <TextView
+                            android:id="@+id/txt_usuario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Usuário"
+                            android:textColor="@android:color/black" />
+                        <TextView
+                            android:id="@+id/txt_data"
+                            android:gravity="right"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/data"
+                            android:textColor="#00ff00"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layout2"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/status"
+                            android:textColor="@color/grey_800" />
+
+                        <TextView
+                            android:id="@+id/txt_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ativo" />
+                        <TextView
+                            android:gravity="right"
+                            android:id="@+id/txt_data_fecha"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/data"
+                            android:textColor="#ff0000"
+                            android:visibility="invisible"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/moderador"
+                            android:textColor="@color/grey_800" />
+
+                        <TextView
+                            android:id="@+id/txt_moderador"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Moderador"
+                            android:textColor="@android:color/black" />
+                        <TextView
+                            android:paddingLeft="3dp"
+                            android:id="@+id/txt_especialidade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(especialidade)"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/txt_Titulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="2dp"
                         android:text="Título"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
@@ -51,170 +129,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="Título"
+                        android:text="Mensagem a ser descrita como resposta para a pergunta feita por outro usuário e auxiliada por um intermediador."
                         android:textColor="@android:color/black" />
 
 
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:id="@+id/view"
-                android:layout_below="@+id/layout"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginLeft="@dimen/foto_list_forum"/>
-            <LinearLayout
-                android:id="@+id/layout0"
-                android:layout_below="@+id/view"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/usuario"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_usuario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Usuário"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout2"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:orientation="horizontal"
-                android:layout_below="@+id/layout0"
-                android:layout_marginBottom="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="@string/status"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ativo" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:id="@+id/layout3"
-                android:layout_below="@+id/layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/d_abertura"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/data"
-                    android:textColor="#00ff00"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout4"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:layout_below="@+id/layout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/d_fechamento"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_data_fecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/data"
-                    android:textColor="#ff0000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout5"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:layout_below="@+id/layout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/moderador"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_moderador"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/moderador"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout6"
-                android:layout_marginLeft="@dimen/foto_list_forum"
-                android:layout_below="@+id/layout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/especialidade"
-                    android:textColor="@color/grey_800" />
-
-                <TextView
-                    android:id="@+id/txt_especialidade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/especialidade"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card"
+    <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true">-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -225,7 +156,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:background="@android:drawable/ic_menu_camera"
                     android:id="@+id/img_foto_res"
                     android:layout_width="@dimen/foto_list"
                     android:layout_height="@dimen/foto_list"
@@ -234,14 +166,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingRight="8dp">
                     <LinearLayout
                         android:id="@+id/layout8"
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="15dp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
 
 
                         <TextView
@@ -251,7 +186,6 @@
                             android:text="@string/usuario"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"/>
-
                         <TextView
                             android:gravity="right"
                             android:id="@+id/txt_data_resposta"
@@ -266,7 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="Título"
+                        android:text="Mensagem a ser descrita como resposta para a pergunta feita por outro usuário e auxiliada por um intermediador."
                         android:textColor="@android:color/black" />
 
                 </LinearLayout>
@@ -275,7 +209,7 @@
             </LinearLayout>
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
 
 
 </LinearLayout>
