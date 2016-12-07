@@ -140,7 +140,6 @@ public class MsgFragment extends Fragment {
                             case 200:
                                 break;
                             case 400:
-                                Toast.makeText(getContext(),"erro",Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
