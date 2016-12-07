@@ -62,6 +62,7 @@ public class MsgFragment extends Fragment {
         super.onCreate(savedInstanceState);
         usuarioBO = new UsuarioBo(getContext());
         usuario = usuarioBO.get(null, null);
+        setHasOptionsMenu(true);
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +75,19 @@ public class PerguntaFragment extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.APP, Context.MODE_PRIVATE);
         forumId = preferences.getInt("FORUMTOPICO", 0);
 
+
+
+        MensagemTask mensagemTask=new MensagemTask();
+        mensagemTask.execute();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view=inflater.inflate(R.layout.fragment_pergunta, container, false);
+        perguntaBo=new PerguntaBo(getContext());
+        forum = perguntaBo.get(null,null);
+
         titulo = (TextView) view.findViewById(R.id.txt_Titulo);
         msg = (TextView) view.findViewById(R.id.txt_msg);
         usuario = (TextView) view.findViewById(R.id.txt_usuario);
@@ -86,17 +100,7 @@ public class PerguntaFragment extends Fragment {
         especialdade=(TextView) view.findViewById(R.id.txt_especialidade);
         especialdade.setVisibility(View.GONE);
 
-        MensagemTask mensagemTask=new MensagemTask();
-        mensagemTask.execute();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.fragment_pergunta, container, false);
-        perguntaBo=new PerguntaBo(getContext());
-        forum = perguntaBo.get(null,null);
-        ( (CardView)view.findViewById(R.id.card)).setVisibility(View.GONE);
+        ((LinearLayout)view.findViewById(R.id.layout7)).setVisibility(View.GONE);
 
 
 
@@ -203,7 +207,7 @@ public class PerguntaFragment extends Fragment {
     }
     private void createAdapterMsg() {
         if (opc) {
-            ( (CardView)view.findViewById(R.id.card)).setVisibility(View.VISIBLE);
+            ((LinearLayout)view.findViewById(R.id.layout7)).setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(mensagem.getFoto()).placeholder(android.R.drawable.ic_menu_camera).into((ImageView)view.findViewById(R.id.img_foto_res));
 
             TextView usuario=(TextView)view.findViewById(R.id.txt_usuario_resposta);
@@ -215,7 +219,7 @@ public class PerguntaFragment extends Fragment {
             TextView msg=(TextView)view.findViewById(R.id.txt_msg_resposta);
             msg.setText(mensagem.getMensagem());
         }else {
-            ( (CardView)view.findViewById(R.id.card)).setVisibility(View.GONE);
+            ((LinearLayout)view.findViewById(R.id.layout7)).setVisibility(View.GONE);
         }
         loading = true;
     }

@@ -105,6 +105,7 @@ public class ForumMsgActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
+
                     return new PerguntaFragment();
                 case 1:
                     return new MsgFragment();
